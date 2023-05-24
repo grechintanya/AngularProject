@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding: 0 30px;
+}
+
+.user-options {
+    display: flex;
+    justify-content: space-between;   
+}
+
+.user-options div {
+    margin-right: 10px;
+}
