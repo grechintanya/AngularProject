@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Course } from 'src/app/utils/global.models';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-course-item',
@@ -7,11 +6,16 @@ import { Course } from 'src/app/utils/global.models';
   styleUrls: ['./course-item.component.css']
 })
 export class CourseItemComponent {
-  course: Course = {
-    id: 1,
-    title: 'VideoCourse 1',
-    creationDate: '12/02/2022',
-    duration: 220,
-    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga, amet!'
+  @Input() title = '';
+  @Input() description = '';
+  @Input() duration = 0;
+  @Input() creationDate = '';
+  @Input() courseId: string|number = '';
+
+  @Output()
+  deleteButtonClicked: EventEmitter<string|number> = new EventEmitter<string|number>();
+
+  onDeleteButtonClicked() {
+    this.deleteButtonClicked.emit(this.courseId)
   }
 }

@@ -1,4 +1,20 @@
 <div class="course-item">
-    <h3>{{ course.title }}</h3>
-    <div>{{ course.description }}</div>
+    <div class="card-left">
+        <div class="card-header">
+            <h3>{{ title }}</h3>
+            <p>
+                <mat-icon>access_time</mat-icon><span>{{ duration }}</span>
+                <mat-icon>calendar_today</mat-icon><span>{{ creationDate }}</span>
+            </p>
+        </div>
+        <div class="description">{{ description }}</div>
+    </div>
+    <div class="buttons">
+        <button mat-raised-button color="primary">
+            <mat-icon>edit</mat-icon>Edit
+        </button>
+        <button mat-raised-button color="primary" (click)="onDeleteButtonClicked()">
+            <mat-icon>delete</mat-icon>Delete
+        </button>
+    </div>
 </div>
