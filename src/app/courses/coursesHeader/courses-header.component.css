@@ -1,6 +1,17 @@
 .courses-header {
-    padding: 20px;
+    padding: 20px 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
+input {
+    padding: 10px;
+    margin-right: 5px;
+    height: 36px;
+    width: 250px;
+}
+
+input:focus {
+    outline: 2px solid #ff4081;
+    border: none;
+}
