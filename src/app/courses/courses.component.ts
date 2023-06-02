@@ -10,7 +10,7 @@ export class CoursesComponent implements OnInit {
   courseList: Course[] = [];
 
   onLoadMoreClick() {
-    console.log('load more')
+    console.log('load more...')
   }
 
   ngOnInit(): void {

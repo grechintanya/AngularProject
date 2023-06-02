@@ -2,11 +2,7 @@
 <app-courses-header></app-courses-header>
 
 <div class="courses" *ngFor="let item of courseList; trackBy: trackById">
-    <app-course-item [title]="item.title"
-        [description]="item.description"
-        [duration]="item.duration"
-        [creationDate]="item.creationDate"
-        [courseId]="item.id"
+    <app-course-item [course]="item"
         (deleteButtonClicked)="onDeleteButtonClicked($event)"
     >
     </app-course-item>
