@@ -27,11 +27,10 @@ describe('CoursesHeaderComponent', () => {
     });
     
     it('should log a search value to the console', () => {
-        const searchInput = fixture.debugElement.query(By.css('input')).nativeElement;
-        searchInput.value = 'course';
+        component.searchValue = 'course';
         const logSpy = spyOn(console, 'log');
         fixture.detectChanges();
-        component.onSearchButtonClicked(searchInput);
+        component.onSearchButtonClicked(component.searchValue);
         expect(logSpy).toHaveBeenCalledWith('course');
     })
 });

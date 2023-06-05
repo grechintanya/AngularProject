@@ -22,10 +22,10 @@ describe('CoursesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize a course list in ngOnInit method'), () => {
+  it('should initialize a course list in ngOnInit method', () => {
     component.ngOnInit();
     expect(component.courseList).toEqual(mockedCourses);
-  };
+  });
 
   it('should log the "load more" message to the console when onLoadMoreClick method is called', () => {
     const consoleSpy = spyOn(console, 'log');

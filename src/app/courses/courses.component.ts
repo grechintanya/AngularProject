@@ -8,6 +8,7 @@ import { mockedCourses, Course } from '../utils/public_api';
 })
 export class CoursesComponent implements OnInit {
   courseList: Course[] = [];
+  noCoursesMessage = 'No data. Feel free to add a new course'
 
   onLoadMoreClick() {
     console.log('load more...')

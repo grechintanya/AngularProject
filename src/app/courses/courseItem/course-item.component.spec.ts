@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CourseItemComponent } from './course-item.component';
+import { CoursesModule } from '../courses.module';
 
 describe('CourseItemComponent', () => {
     let component: CourseItemComponent;
@@ -10,7 +11,7 @@ describe('CourseItemComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [CourseItemComponent],
-            imports: [FormsModule],
+            imports: [FormsModule, CoursesModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
     });
@@ -23,7 +24,8 @@ describe('CourseItemComponent', () => {
             title: 'Course1',
             description: 'description',
             duration: 50,
-            creationDate: '12/12/2020'
+            creationDate: new Date(2020, 11, 12),
+            topRated: false
         };
         fixture.detectChanges();
     });
@@ -31,7 +33,7 @@ describe('CourseItemComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-    
+
     it('should emit a click event with course ID when the Delete button is clicked', () => {
         const event = spyOn(component.deleteButtonClicked, 'emit');
         component.onDeleteButtonClicked();
