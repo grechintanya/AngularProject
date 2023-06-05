@@ -44,7 +44,20 @@ h3 {
     padding: 1rem 0;
 }
 
+.card-header .star {
+    color: orange;
+    vertical-align: top;
+    font-size: 1.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-left: 5px;
+}
+
 button {
     font-size: 0.8rem;
     margin-right: 5px;
+}
+
+.top_rated {
+    background-color: rgb(253, 216, 223);
 }

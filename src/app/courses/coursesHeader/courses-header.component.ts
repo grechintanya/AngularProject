@@ -7,14 +7,10 @@ import { Component } from '@angular/core';
 })
 export class CoursesHeaderComponent {
   
-  searchValue = '';
+  searchValue = 'qwerty';
 
-  changeSearchValue(EventData: Event) {
-    this.searchValue = (<HTMLInputElement>EventData.target).value;
-  }
-
-  onSearchButtonClicked(input: HTMLInputElement) {
-    console.log(input.value);
+  onSearchButtonClicked(input: string) {
+    console.log(input);
     this.searchValue = '';
   }
 }

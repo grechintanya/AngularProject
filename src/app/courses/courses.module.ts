@@ -1,22 +1,24 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { CoursesComponent } from './courses.component';
-import { CourseItemComponent } from './courseItem/courseItem.component';
-import { CoursesHeaderComponent } from './coursesHeader/coursesHeader.component';
+import { CourseItemComponent } from './courseItem/course-item.component';
+import { CoursesHeaderComponent } from './coursesHeader/courses-header.component';
+import { setBorderDirective } from '../utils/public_api';
 
 @NgModule({
   declarations: [
     CoursesComponent,
     CoursesHeaderComponent,
-    CourseItemComponent
+    CourseItemComponent,
+    setBorderDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    MatButtonModule, 
+    MatButtonModule,
     MatIconModule
   ],
   exports: [
