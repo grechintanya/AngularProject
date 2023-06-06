@@ -30,6 +30,15 @@
     color: lightslategray;
 }
 
+.card-header .star {
+    color: orange;
+    font-size: 1.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: 5px;
+    vertical-align: text-bottom;
+}
+
 .material-icons {
     font-size: 1.2rem;
     vertical-align:text-bottom;
@@ -47,4 +56,8 @@ h3 {
 button {
     font-size: 0.8rem;
     margin-right: 5px;
+}
+
+.top_rated {
+    background-color: rgb(185, 243, 253);
 }
