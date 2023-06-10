@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoursesComponent } from './courses.component';
 import {CoursesModule} from './courses.module';
-import { mockedCourses } from '../utils/public_api';
+import { mockedCourses, FilterPipe } from '../utils/public_api';
 
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
@@ -37,6 +37,13 @@ describe('CoursesComponent', () => {
     const consoleSpy = spyOn(console, 'log');
     component.onDeleteButtonClicked(2);
     expect(consoleSpy).toHaveBeenCalledWith(2);
-  })
+  });
+
+  it("should call FilterPipe transform method with a search query, when onSearchButtonClicked method is called", () => {
+    const filterPipe = TestBed.inject(FilterPipe);
+    const searchSpy = spyOn(filterPipe, 'transform');
+    component.onSearchButtonClicked('course');
+    expect(searchSpy).toHaveBeenCalledWith(component.courseList, 'course');
+  });
 
 });

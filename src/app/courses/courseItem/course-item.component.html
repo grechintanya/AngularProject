@@ -1,10 +1,11 @@
-<div class="course-item" [ngClass]="{top_rated: course.topRated}" appSetBorder [creationDate]="course.creationDate">
+<div class="course-item" appSetBorder [creationDate]="course.creationDate" [ngClass]="{'top_rated': course.topRated}">
     <div class="card-left">
         <div class="card-header">
-            <h3>{{ course.title | uppercase }}<mat-icon class="star" *ngIf="course.topRated">star</mat-icon></h3>
+            <h3>{{ course.title | uppercase }}<mat-icon *ngIf="course.topRated" class="star">star</mat-icon>
+            </h3>
             <p>
-                <mat-icon>access_time</mat-icon><span>{{ course.duration }}</span>
-                <mat-icon>calendar_today</mat-icon><span>{{ course.creationDate | date: 'mediumDate' }}</span>
+                <mat-icon>access_time</mat-icon><span>{{ course.duration | formatDuration }}</span>
+                <mat-icon>calendar_today</mat-icon><span>{{ course.creationDate | date: 'medium' }}</span>
             </p>
         </div>
         <div class="description">{{ course.description }}</div>

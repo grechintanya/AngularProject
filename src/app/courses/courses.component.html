@@ -1,14 +1,13 @@
 <div class="container">
-    <app-courses-header></app-courses-header>
+    <app-courses-header (searchButtonClicked)="onSearchButtonClicked($event)"></app-courses-header>
     <div *ngIf="courseList.length > 0; else message">
-        <div class="courses" *ngFor="let item of courseList; trackBy: trackById">
-            <app-course-item [course]="item" (deleteButtonClicked)="onDeleteButtonClicked($event)"
-            >
+        <div class="courses" *ngFor="let item of filteredCourseList | orderByDate; trackBy: trackById">
+            <app-course-item [course]="item" (deleteButtonClicked)="onDeleteButtonClicked($event)">
             </app-course-item>
         </div>
         <button class="load" (click)="onLoadMoreClick()">Load more</button>
     </div>
+    <ng-template #message>
+        <div class="nodata_message">No data. Feel free to add a new course</div>
+    </ng-template>
 </div>
-<ng-template #message>
-    <div class="message">{{ noCoursesMessage | uppercase }}</div>
-</ng-template>

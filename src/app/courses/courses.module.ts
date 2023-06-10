@@ -6,14 +6,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { CoursesComponent } from './courses.component';
 import { CourseItemComponent } from './courseItem/course-item.component';
 import { CoursesHeaderComponent } from './coursesHeader/courses-header.component';
-import { setBorderDirective } from '../utils/public_api';
+import { setBorderDirective, FormatDurationPipe, FilterPipe, OrderByPipe } from '../utils/public_api';
+
 
 @NgModule({
   declarations: [
     CoursesComponent,
     CoursesHeaderComponent,
     CourseItemComponent,
-    setBorderDirective
+    setBorderDirective,
+    FormatDurationPipe,
+    OrderByPipe   
   ],
   imports: [
     BrowserModule,
@@ -24,6 +27,6 @@ import { setBorderDirective } from '../utils/public_api';
   exports: [
     CoursesComponent
   ],
-  providers: [],
+  providers: [FilterPipe],
 })
 export class CoursesModule { }

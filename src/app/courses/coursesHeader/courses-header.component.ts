@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-courses-header',
@@ -9,8 +9,11 @@ export class CoursesHeaderComponent {
   
   searchValue = 'qwerty';
 
-  onSearchButtonClicked(input: string) {
-    console.log(input);
+  @Output()
+  searchButtonClicked: EventEmitter<string> = new EventEmitter<string>();
+
+  onSearchButtonClicked() {
+    this.searchButtonClicked.emit(this.searchValue);
     this.searchValue = '';
   }
 }
