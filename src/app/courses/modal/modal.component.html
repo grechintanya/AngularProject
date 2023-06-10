@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>Delete course?</h1>
+<div mat-dialog-content>Are you sure you want to delete {{ result?.title }}?</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="false">Cancel</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true">Yes, delete</button>
+</div>

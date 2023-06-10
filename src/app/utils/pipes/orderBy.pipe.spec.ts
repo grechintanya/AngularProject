@@ -4,7 +4,8 @@ import { mockedCourses } from '../global.constants';
 describe('OrderByPipe', () => {
     
     const orderByPipe = new OrderByPipe();
-    const sortedCoursesList = orderByPipe.transform(mockedCourses);
+    const couresList = [...mockedCourses];
+    const sortedCoursesList = orderByPipe.transform(couresList);
     
     it('should return an array of 3 courses', () => {
         expect(sortedCoursesList.length).toBe(3)

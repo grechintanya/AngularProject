@@ -37,6 +37,6 @@ describe('CourseItemComponent', () => {
     it('should emit a click event with course ID when the Delete button is clicked', () => {
         const event = spyOn(component.deleteButtonClicked, 'emit');
         component.onDeleteButtonClicked();
-        expect(event).toHaveBeenCalledWith(1);
+        expect(event).toHaveBeenCalledWith({courseID: 1, title: 'Course1'});
     });
 });

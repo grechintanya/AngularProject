@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Course } from 'src/app/utils/global.models';
+import { Course, DeleteButtonClickedEvent } from 'src/app/utils/public_api';
 
 @Component({
   selector: 'app-course-item',
@@ -10,9 +10,10 @@ export class CourseItemComponent {
   @Input() course!: Course;
 
   @Output()
-  deleteButtonClicked: EventEmitter<string | number> = new EventEmitter<string | number>();
+  deleteButtonClicked: EventEmitter<DeleteButtonClickedEvent> = 
+  new EventEmitter<DeleteButtonClickedEvent>();
 
   onDeleteButtonClicked() {
-    this.deleteButtonClicked.emit(this.course?.id)
+    this.deleteButtonClicked.emit({courseID: this.course.id, title: this.course?.title})
   }
 }

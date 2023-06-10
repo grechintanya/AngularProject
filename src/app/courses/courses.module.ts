@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+
 import { CoursesComponent } from './courses.component';
 import { CourseItemComponent } from './courseItem/course-item.component';
 import { CoursesHeaderComponent } from './coursesHeader/courses-header.component';
+import { ConfirmationModalComponent } from './modal/modal.component';
 import { setBorderDirective, FormatDurationPipe, FilterPipe, OrderByPipe } from '../utils/public_api';
+import { CoursesService } from '../services';
 
 @NgModule({
   declarations: [
@@ -15,17 +20,23 @@ import { setBorderDirective, FormatDurationPipe, FilterPipe, OrderByPipe } from 
     CourseItemComponent,
     setBorderDirective,
     FormatDurationPipe,
-    OrderByPipe   
+    OrderByPipe,
+    ConfirmationModalComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   exports: [
     CoursesComponent
   ],
-  providers: [FilterPipe],
+  providers: [
+    FilterPipe,
+    CoursesService
+  ],
+  
 })
 export class CoursesModule { }

@@ -7,8 +7,23 @@ export interface Course {
     topRated: boolean
 }
 
+export interface CourseFields {
+    title?: string,
+    creationDate?: Date,
+    duration?: number,
+    description?: string,
+    topRated?: boolean
+}
+
+export interface DeleteButtonClickedEvent {
+    courseID: number | string, 
+    title: string
+}
+
 export interface User {
     id: string | number,
-    firstName: string,
-    lastName: string
+    userName: string,
+    email: string,
+    password: string
+
 }

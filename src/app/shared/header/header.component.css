@@ -10,8 +10,13 @@
     justify-content: space-between;   
 }
 
-.user-options div {
+.user-options button {
     margin-right: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
 }
 
 .mat-icon {

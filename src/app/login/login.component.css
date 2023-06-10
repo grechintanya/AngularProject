@@ -1,0 +1,28 @@
+.login_form {
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 2px solid var(--main-color);
+    border-radius: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+}
+
+input:focus {
+    outline: 2px solid var(--accent-color);
+    border: none;
+}
+
+.login_form div {
+    margin: 20px 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+label {
+    font-weight: bold;
+}

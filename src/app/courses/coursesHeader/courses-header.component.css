@@ -12,6 +12,6 @@ input {
 }
 
 input:focus {
-    outline: 2px solid #ff4081;
+    outline: 2px solid var(--accent-color);
     border: none;
 }

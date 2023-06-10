@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { mockedCourses, Course } from '../utils/public_api';
-import { FilterPipe } from '../utils/public_api';
+import { MatDialog } from '@angular/material/dialog';
+
+import { Course, DeleteButtonClickedEvent, FilterPipe } from '../utils/public_api';
+import { CoursesService } from '../services';
+import { ConfirmationModalComponent } from './modal/modal.component';
 
 @Component({
   selector: 'app-courses',
@@ -10,28 +13,40 @@ import { FilterPipe } from '../utils/public_api';
 export class CoursesComponent implements OnInit {
   courseList: Course[] = [];
   filteredCourseList: Course[] = [];
-  
-  constructor(private filterPipe: FilterPipe) {
-  }
+  isAuth = false;
+
+  constructor(private filterPipe: FilterPipe,
+    private coursesService: CoursesService,
+    private dialog: MatDialog) {  }
 
   onLoadMoreClick() {
     console.log('load more...')
   }
 
   ngOnInit(): void {
-    this.courseList = mockedCourses;
-    this.filteredCourseList = [...this.courseList];  
+    this.courseList = this.coursesService.getCourseList();
+    this.filteredCourseList = [...this.courseList];
   }
 
   trackById(index: number, item: Course): string | number {
     return item.id
   }
 
-  onDeleteButtonClicked(data: string | number) {
-    console.log(data)
+  deleteCourse(courseID: number|string) {
+    this.coursesService.removeCourse(courseID);
+    this.courseList = this.coursesService.getCourseList();
+  }
+
+  onDeleteButtonClicked(event: DeleteButtonClickedEvent) {
+    const modalWindow = this.dialog.open(ConfirmationModalComponent, { data: { title: event.title } });
+    modalWindow.afterClosed().subscribe(data => {
+      if (data) { 
+        this.deleteCourse(event.courseID);
+      }
+    });
   }
 
   onSearchButtonClicked(searchText: string) {
-     this.filteredCourseList = this.filterPipe.transform(this.courseList, searchText)
+    this.filteredCourseList = this.filterPipe.transform(this.courseList, searchText)
   }
 }

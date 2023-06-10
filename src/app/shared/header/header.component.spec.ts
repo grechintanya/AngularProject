@@ -1,5 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthService } from 'src/app/services';
+import { IfAuthenticatedDirective } from 'src/app/utils/public_api';
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
@@ -8,8 +10,9 @@ describe('HeaderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [HeaderComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            declarations: [HeaderComponent, IfAuthenticatedDirective],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            providers: [AuthService]
         });
         fixture = TestBed.createComponent(HeaderComponent);
         component = fixture.componentInstance;
