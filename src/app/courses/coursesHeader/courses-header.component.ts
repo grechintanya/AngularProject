@@ -7,7 +7,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class CoursesHeaderComponent {
   
-  searchValue = '';
+  searchValue = 'qwerty';
 
   @Output()
   searchButtonClicked: EventEmitter<string> = new EventEmitter<string>();

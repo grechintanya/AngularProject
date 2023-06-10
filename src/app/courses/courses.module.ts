@@ -8,6 +8,7 @@ import { CourseItemComponent } from './courseItem/course-item.component';
 import { CoursesHeaderComponent } from './coursesHeader/courses-header.component';
 import { setBorderDirective, FormatDurationPipe, FilterPipe, OrderByPipe } from '../utils/public_api';
 
+
 @NgModule({
   declarations: [
     CoursesComponent,

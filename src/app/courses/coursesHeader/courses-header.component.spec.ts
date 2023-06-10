@@ -24,7 +24,7 @@ describe('CoursesHeaderComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-    
+  
     it('should emit a click event with a search query, when the Search button is clicked', () => {
         const event = spyOn(component.searchButtonClicked, 'emit');
         component.searchValue = 'course';

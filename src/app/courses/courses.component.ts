@@ -9,12 +9,13 @@ import { FilterPipe } from '../utils/public_api';
 })
 export class CoursesComponent implements OnInit {
   courseList: Course[] = [];
+
   filteredCourseList: Course[] = [];
   
   constructor(private filterPipe: FilterPipe) {
   }
 
-  onLoadMoreClick() {
+onLoadMoreClick() {
     console.log('load more...')
   }
 
