@@ -1,3 +1,8 @@
+:root {
+    --main-color: #3f51b5;
+    --accent-color: #ff4081;
+}
+
 * {
     padding: 0;
     margin: 0;

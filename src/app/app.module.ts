@@ -1,32 +1,34 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
-
 import { AppRoutingModule } from './app-routing.module';
+import { MatIconModule } from '@angular/material/icon';
+
 import { AppComponent } from './app.component';
 import { CoursesModule } from './courses/courses.module';
-import { LoginComponent } from './login/login.component';
+import { LoginModule } from './login/login.module';
 import { NewCourseComponent } from './new-course/new-course.component';
 import { HeaderComponent, FooterComponent, BreadcrumbsComponent } from './shared';
+import { FilterPipe, IfAuthenticatedDirective } from './utils/public_api';
+import { AuthService } from './services';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     NewCourseComponent,
     HeaderComponent,
     FooterComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    IfAuthenticatedDirective,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     MatIconModule,
-    CoursesModule
+    CoursesModule,
+    LoginModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

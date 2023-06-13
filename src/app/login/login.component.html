@@ -1,1 +1,10 @@
-<p>login works!</p>
+<form class="login_form">
+    <h1>Login</h1>
+    <div><label for="email_input">Email:</label><span>*required</span></div>
+    <input type="text" id="email_input" name="email" placeholder="Enter email" [(ngModel)]="email">
+    <div><label for="password_input">Email:</label><span>*required</span></div>
+    <input type="text" id="password_input" name="password" placeholder="Enter password" [(ngModel)]="password">
+    <div><a href="#">Forgot password?</a>
+        <button mat-raised-button color="primary" (click)="onLoginButtonClicked()">Login</button>
+    </div>
+</form>
