@@ -8,6 +8,7 @@ import { CoursesService } from '../services';
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
   let fixture: ComponentFixture<CoursesComponent>;
+  let fakeCoursesService: CoursesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -15,6 +16,7 @@ describe('CoursesComponent', () => {
       imports: [CoursesModule]
     });
     fixture = TestBed.createComponent(CoursesComponent);
+    fakeCoursesService = TestBed.inject(CoursesService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -24,6 +26,7 @@ describe('CoursesComponent', () => {
   });
 
   it('should initialize a course list in ngOnInit method', () => {
+    spyOn(fakeCoursesService, 'getCourseList').and.returnValue(mockedCourses);
     component.ngOnInit();
     expect(component.courseList).toEqual(mockedCourses);
   });
@@ -35,7 +38,6 @@ describe('CoursesComponent', () => {
   });
 
   it("should call CoursesService's method 'removeCourse', when deleteCourse method is called", () => {
-    const fakeCoursesService = TestBed.inject(CoursesService);
     const serviceSpy = spyOn(fakeCoursesService, 'removeCourse');
     component.deleteCourse(2);
     expect(serviceSpy).toHaveBeenCalledWith(2);

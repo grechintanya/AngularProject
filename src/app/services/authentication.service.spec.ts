@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import { AuthService } from './authentication.service';
 
 describe('AuthService', () => {
@@ -5,7 +6,8 @@ describe('AuthService', () => {
     let authService: AuthService;
     
     beforeEach(() => {
-        authService = new AuthService();
+        TestBed.configureTestingModule({providers: [AuthService]});
+        authService = TestBed.inject(AuthService);
         authService.user = {
             id: 2,
             userName: 'test',

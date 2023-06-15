@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { DateComponent } from './date/date.component';
+import { DurationComponent } from './duration/duration.component';
 
 @Component({
   selector: 'app-new-course',
@@ -7,4 +9,18 @@ import { Component } from '@angular/core';
 })
 export class NewCourseComponent {
 
+  title!: string;
+  description!: string;
+
+  @ViewChild(DateComponent) date!: DateComponent;
+  @ViewChild(DurationComponent) duration!: DurationComponent;
+
+  onCancelButtonClicked() {
+    console.log('Cancel')
+  }
+
+  onSaveButtonClicked() {
+    console.log(`title: ${this.title}\ndescription: ${this.description}
+    date: ${this.date.creationDate}\nduration: ${this.duration.duration}`);
+  }
 }

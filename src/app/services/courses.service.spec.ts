@@ -1,11 +1,14 @@
-import { Course, CourseFields, mockedCourses } from '../utils/public_api';
+import { TestBed } from '@angular/core/testing';
+import { Course } from '../utils/public_api';
 import { CoursesService } from './courses.service';
 
 describe('CoursesService', () => {
     let coursesService: CoursesService;
 
     beforeEach(() => {
-        coursesService = new CoursesService();
+        TestBed.configureTestingModule({providers: [CoursesService]});
+        coursesService = TestBed.inject(CoursesService);
+
         coursesService.courseList = [
             {
                 id: 1, title: 'VideoCourse 1', creationDate: new Date('2022-12-03'),
@@ -47,12 +50,16 @@ describe('CoursesService', () => {
         expect(item?.title).toBe('VideoCourse 1');
     });
 
-    it('updateCourse should overwrite an item with updated fields', () => {
-        const fields: CourseFields = {
+    it('updateCourse should overwrite an item with new course object', () => {
+        const newCourse: Course = {
+            id: 1,
             title: 'Test',
-            duration: 100
+            description: 'course description',
+            duration: 100,
+            creationDate: new Date(),
+            topRated: true
         };
-        coursesService.updateCourse(1, fields);
+        coursesService.updateCourse(1, newCourse);
         const updatedItem = coursesService.getCourseById(1);
         expect(updatedItem?.title).toBe('Test');
         expect(updatedItem?.duration).toBe(100);

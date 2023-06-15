@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { CoursesModule } from './courses/courses.module';
 import { LoginModule } from './login/login.module';
-import { NewCourseComponent } from './new-course/new-course.component';
+import { NewCourseModule } from './new-course/new-course.module';
 import { HeaderComponent, FooterComponent, BreadcrumbsComponent } from './shared';
 import { FilterPipe, IfAuthenticatedDirective } from './utils/public_api';
 import { AuthService } from './services';
@@ -14,7 +14,6 @@ import { AuthService } from './services';
 @NgModule({
   declarations: [
     AppComponent,
-    NewCourseComponent,
     HeaderComponent,
     FooterComponent,
     BreadcrumbsComponent,
@@ -26,7 +25,8 @@ import { AuthService } from './services';
     AppRoutingModule,
     MatIconModule,
     CoursesModule,
-    LoginModule
+    LoginModule,
+    NewCourseModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

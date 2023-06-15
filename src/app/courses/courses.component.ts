@@ -13,7 +13,7 @@ import { ConfirmationModalComponent } from './modal/modal.component';
 export class CoursesComponent implements OnInit {
   courseList: Course[] = [];
   filteredCourseList: Course[] = [];
-  isAuth = false;
+  isNewCourse = false;
 
   constructor(private filterPipe: FilterPipe,
     private coursesService: CoursesService,
@@ -25,7 +25,7 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     this.courseList = this.coursesService.getCourseList();
-    this.filteredCourseList = [...this.courseList];
+    this.filteredCourseList = this.filterPipe.transform(this.courseList, '');
   }
 
   trackById(index: number, item: Course): string | number {
@@ -35,6 +35,7 @@ export class CoursesComponent implements OnInit {
   deleteCourse(courseID: number|string) {
     this.coursesService.removeCourse(courseID);
     this.courseList = this.coursesService.getCourseList();
+    this.filteredCourseList = this.filterPipe.transform(this.courseList, '');
   }
 
   onDeleteButtonClicked(event: DeleteButtonClickedEvent) {
@@ -48,5 +49,9 @@ export class CoursesComponent implements OnInit {
 
   onSearchButtonClicked(searchText: string) {
     this.filteredCourseList = this.filterPipe.transform(this.courseList, searchText)
+  }
+
+  onAddCourseButtonClicked(isNewCourse: boolean) {
+    this.isNewCourse = isNewCourse;
   }
 }

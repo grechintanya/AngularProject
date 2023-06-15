@@ -16,4 +16,11 @@ export class CoursesHeaderComponent {
     this.searchButtonClicked.emit(this.searchValue);
     this.searchValue = '';
   }
+
+  @Output()
+  addCourseButtonClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  onAddCourseButtonClicked() {
+    this.addCourseButtonClicked.emit(true);
+  }
 }

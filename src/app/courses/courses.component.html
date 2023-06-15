@@ -1,5 +1,7 @@
 <div class="container">
-    <app-courses-header (searchButtonClicked)="onSearchButtonClicked($event)"></app-courses-header>
+    <app-courses-header (searchButtonClicked)="onSearchButtonClicked($event)"
+        (addCourseButtonClicked)="onAddCourseButtonClicked($event)"
+    ></app-courses-header>
     <div *ngIf="filteredCourseList.length > 0; else message">
         <div class="courses" *ngFor="let item of filteredCourseList | orderByDate; trackBy: trackById">
             <app-course-item [course]="item" (deleteButtonClicked)="onDeleteButtonClicked($event)">
@@ -10,4 +12,5 @@
     <ng-template #message>
         <div class="nodata_message">No data to display</div>
     </ng-template>
+    <app-new-course *ngIf="isNewCourse"></app-new-course>
 </div>

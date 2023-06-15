@@ -9,10 +9,22 @@ import { AuthService } from './services';
 export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
-  isAuth = false
+  isAuth = false;
 
   ngOnInit(): void {
-    this.isAuth = this.authService.isAuthenticated;  
+    this.isAuth = this.authService.isAuthenticated;
   }
   
+  onLogoutButtonClicked(isAuth: boolean) {
+    this.authService.logout();
+    this.isAuth = isAuth;
+    console.log('Logout');
+  }
+
+  onLoginButtonClicked(isAuth: boolean) {
+    this.authService.login();
+    this.isAuth = isAuth;
+    console.log('logged in successfully');
+  }
+
 }

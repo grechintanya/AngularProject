@@ -1,0 +1,32 @@
+.course_form {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 30px;
+    border: 2px solid var(--main-color);
+    border-radius: 5px;
+}
+
+.label_container {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.text_input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.text_input:focus {
+    outline: 2px solid var(--accent-color);
+    border: none;
+}
+
+.buttons {
+    margin: 10px 0;
+}
+
+.buttons button {
+    margin-right: 10px;
+}

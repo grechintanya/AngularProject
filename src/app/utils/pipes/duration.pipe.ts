@@ -4,7 +4,13 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'formatDuration'
 })
 export class FormatDurationPipe implements PipeTransform {
-    transform(duration: number) {
+    transform(duration: number | string) {
+        if (!duration) {
+            return ''
+        }
+        if (typeof duration === 'string') {
+            duration = Number(duration)
+        }
         if (duration <= 60) {
             return `${duration}min`
         } else {
