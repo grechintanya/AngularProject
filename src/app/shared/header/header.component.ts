@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../../services';
 
 @Component({
@@ -12,8 +12,11 @@ export class HeaderComponent {
   isAuth = this.authService.isAuthenticated;
   userName = this.authService.getUserInfo();
 
+  @Output()
+  logoutButtonClicked: EventEmitter<boolean> = 
+  new EventEmitter<boolean>();
+
   onLogoutButtonClicked() {
-    this.authService.logout();
-    console.log('Logout');
+    this.logoutButtonClicked.emit(false);
   }
 }

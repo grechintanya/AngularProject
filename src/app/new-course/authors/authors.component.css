@@ -1,0 +1,14 @@
+.label_container {
+    margin: 10px 0;
+}
+
+.text_input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.text_input:focus {
+    outline: 2px solid var(--accent-color);
+    border: none;
+}

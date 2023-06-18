@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../services';
 
 @Component({
@@ -12,8 +12,10 @@ export class LoginComponent {
   email = '';
   password = '';
 
+  @Output()
+  loginButtonClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   onLoginButtonClicked() {
-    this.authService.login();
-    console.log('logged in successfully');
+    this.loginButtonClicked.emit(true);
   }
 }

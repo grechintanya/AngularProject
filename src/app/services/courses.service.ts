@@ -1,7 +1,7 @@
-import { mockedCourses, Course, CourseFields } from "../utils/public_api";
+import { mockedCourses, Course } from "../utils/public_api";
 
 export class CoursesService {
-    
+
     courseList: Course[] = [...mockedCourses];
 
     getCourseList() {
@@ -16,12 +16,8 @@ export class CoursesService {
         return this.courseList.find(item => item.id === courseID)
     }
 
-    updateCourse(courseID: number | string, fields: CourseFields) {
-        this.courseList.forEach(item => {
-            if (item.id === courseID) {
-                item = Object.assign(item, fields)
-            }
-        })
+    updateCourse(courseID: number | string, newCourse: Course) {
+        this.courseList = this.courseList.map(item => item.id === courseID ? newCourse : item)
     }
 
     removeCourse(courseID: number | string) {

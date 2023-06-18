@@ -1,0 +1,12 @@
+.label_container {
+     margin: 10px 0;
+}
+
+input {
+    padding: 5px;
+}
+
+input:focus {
+    outline: 2px solid var(--accent-color);
+    border: none;
+}

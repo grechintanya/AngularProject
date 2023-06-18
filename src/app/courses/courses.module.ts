@@ -10,8 +10,10 @@ import { CoursesComponent } from './courses.component';
 import { CourseItemComponent } from './courseItem/course-item.component';
 import { CoursesHeaderComponent } from './coursesHeader/courses-header.component';
 import { ConfirmationModalComponent } from './modal/modal.component';
-import { setBorderDirective, FormatDurationPipe, FilterPipe, OrderByPipe } from '../utils/public_api';
+import { setBorderDirective, FilterPipe, OrderByPipe } from '../utils/public_api';
 import { CoursesService } from '../services';
+import { PipesModule } from '../shared/pipes.module';
+import { NewCourseModule } from '../new-course/new-course.module';
 
 
 @NgModule({
@@ -20,7 +22,6 @@ import { CoursesService } from '../services';
     CoursesHeaderComponent,
     CourseItemComponent,
     setBorderDirective,
-    FormatDurationPipe,
     OrderByPipe,
     ConfirmationModalComponent
   ],
@@ -29,7 +30,9 @@ import { CoursesService } from '../services';
     FormsModule,
     MatButtonModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    PipesModule,
+    NewCourseModule
   ],
   exports: [
     CoursesComponent
