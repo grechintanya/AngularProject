@@ -15,6 +15,7 @@ import { CoursesService } from '../services';
 import { PipesModule } from '../shared/pipes.module';
 import { NewCourseModule } from '../new-course/new-course.module';
 
+
 @NgModule({
   declarations: [
     CoursesComponent,

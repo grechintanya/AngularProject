@@ -12,6 +12,7 @@ import { ConfirmationModalComponent } from './modal/modal.component';
 })
 export class CoursesComponent implements OnInit {
   courseList: Course[] = [];
+
   filteredCourseList: Course[] = [];
   isNewCourse = false;
 
@@ -19,7 +20,7 @@ export class CoursesComponent implements OnInit {
     private coursesService: CoursesService,
     private dialog: MatDialog) {  }
 
-  onLoadMoreClick() {
+onLoadMoreClick() {
     console.log('load more...')
   }
 
