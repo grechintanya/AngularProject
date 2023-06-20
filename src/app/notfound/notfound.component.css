@@ -1,0 +1,15 @@
+.container {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    margin: 30px;
+    font-size: 4rem;
+    color: var(--main-color);
+}
+
+h3 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}

@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Course, DeleteButtonClickedEvent } from 'src/app/utils/public_api';
 
 @Component({
@@ -8,6 +9,9 @@ import { Course, DeleteButtonClickedEvent } from 'src/app/utils/public_api';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseItemComponent {
+
+  constructor(private router: Router) {}
+
   @Input() course!: Course;
 
   @Output()
@@ -16,5 +20,9 @@ export class CourseItemComponent {
 
   onDeleteButtonClicked() {
     this.deleteButtonClicked.emit({courseID: this.course.id, title: this.course?.title})
+  }
+
+  onEditButtonClicked() {
+    this.router.navigateByUrl(`courses/${this.course.id}`);
   }
 }

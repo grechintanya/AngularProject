@@ -11,7 +11,7 @@
         <div class="description">{{ course.description }}</div>
     </div>
     <div class="buttons">
-        <button mat-raised-button color="primary">
+        <button mat-raised-button color="primary" (click)="onEditButtonClicked()">
             <mat-icon>edit</mat-icon>Edit
         </button>
         <button mat-raised-button color="primary" (click)="onDeleteButtonClicked()">

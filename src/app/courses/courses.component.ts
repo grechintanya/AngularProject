@@ -13,7 +13,6 @@ import { ConfirmationModalComponent } from './modal/modal.component';
 export class CoursesComponent implements OnInit {
   courseList: Course[] = [];
   filteredCourseList: Course[] = [];
-  isNewCourse = false;
 
   constructor(private filterPipe: FilterPipe,
     private coursesService: CoursesService,
@@ -49,9 +48,5 @@ export class CoursesComponent implements OnInit {
 
   onSearchButtonClicked(searchText: string) {
     this.filteredCourseList = this.filterPipe.transform(this.courseList, searchText)
-  }
-
-  onAddCourseButtonClicked(isNewCourse: boolean) {
-    this.isNewCourse = isNewCourse;
   }
 }

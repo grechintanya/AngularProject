@@ -1,7 +1,7 @@
-<app-header (logoutButtonClicked)="onLogoutButtonClicked($event)"></app-header>
+<app-header (logoutButtonClicked)="onLogoutButtonClicked($event)"
+    [isAuth]="isAuth" [userName]="userName"
+></app-header>
 <main>
-    <app-login *appIfAuth="!isAuth" (loginButtonClicked)="onLoginButtonClicked($event)"></app-login>
-    <app-breadcrumbs *appIfAuth="isAuth"></app-breadcrumbs>
-    <app-courses *appIfAuth="isAuth"></app-courses>
+    <router-outlet></router-outlet>
 </main>
 <app-footer></app-footer>

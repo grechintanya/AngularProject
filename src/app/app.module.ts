@@ -7,18 +7,19 @@ import { AppComponent } from './app.component';
 import { CoursesModule } from './courses/courses.module';
 import { LoginModule } from './login/login.module';
 import { NewCourseModule } from './new-course/new-course.module';
-import { HeaderComponent, FooterComponent, BreadcrumbsComponent } from './shared';
+import { HeaderComponent, FooterComponent } from './shared';
 import { FilterPipe, IfAuthenticatedDirective } from './utils/public_api';
-import { AuthService } from './services';
+import { AuthService, AuthGuardService, CourseResolver } from './services';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    BreadcrumbsComponent,
     IfAuthenticatedDirective,
-    FilterPipe
+    FilterPipe,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +29,7 @@ import { AuthService } from './services';
     LoginModule,
     NewCourseModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuardService, CourseResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AuthService } from '../../services';
 
 @Component({
@@ -9,8 +9,8 @@ import { AuthService } from '../../services';
 export class HeaderComponent {
   constructor(private authService: AuthService) {  }
 
-  isAuth = this.authService.isAuthenticated;
-  userName = this.authService.getUserInfo();
+  @Input() isAuth!: boolean;
+  @Input() userName!: string;
 
   @Output()
   logoutButtonClicked: EventEmitter<boolean> = 

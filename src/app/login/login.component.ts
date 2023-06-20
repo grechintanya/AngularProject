@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services';
 
 @Component({
@@ -7,15 +8,13 @@ import { AuthService } from '../services';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   email = '';
   password = '';
 
-  @Output()
-  loginButtonClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  onLoginButtonClicked() {
-    this.loginButtonClicked.emit(true);
-  }
+    onLoginButtonClicked() {
+    this.authService.login();
+    this.router.navigateByUrl('courses');
+    }
 }
