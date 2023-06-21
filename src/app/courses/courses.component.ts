@@ -14,7 +14,6 @@ export class CoursesComponent implements OnInit {
   courseList: Course[] = [];
 
   filteredCourseList: Course[] = [];
-  isNewCourse = false;
 
   constructor(private filterPipe: FilterPipe,
     private coursesService: CoursesService,
@@ -50,9 +49,5 @@ onLoadMoreClick() {
 
   onSearchButtonClicked(searchText: string) {
     this.filteredCourseList = this.filterPipe.transform(this.courseList, searchText)
-  }
-
-  onAddCourseButtonClicked(isNewCourse: boolean) {
-    this.isNewCourse = isNewCourse;
   }
 }

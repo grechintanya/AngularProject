@@ -8,15 +8,17 @@ import { CoursesService } from '../services';
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
   let fixture: ComponentFixture<CoursesComponent>;
-  let fakeCoursesService: CoursesService;
+  let fakeCoursesService: jasmine.SpyObj<CoursesService>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [CoursesComponent],
-      imports: [CoursesModule]
-    });
+      imports: [CoursesModule],
+      providers: [CoursesService]
+    }).compileComponents();
+    
     fixture = TestBed.createComponent(CoursesComponent);
-    fakeCoursesService = TestBed.inject(CoursesService);
+    fakeCoursesService = TestBed.inject(CoursesService) as jasmine.SpyObj<CoursesService>;
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -26,7 +28,7 @@ describe('CoursesComponent', () => {
   });
 
   it('should initialize a course list in ngOnInit method', () => {
-    spyOn(fakeCoursesService, 'getCourseList').and.returnValue(mockedCourses);
+    fakeCoursesService.getCourseList.and.returnValue(mockedCourses);
     component.ngOnInit();
     expect(component.courseList).toEqual(mockedCourses);
   });
@@ -38,9 +40,8 @@ describe('CoursesComponent', () => {
   });
 
   it("should call CoursesService's method 'removeCourse', when deleteCourse method is called", () => {
-    const serviceSpy = spyOn(fakeCoursesService, 'removeCourse');
     component.deleteCourse(2);
-    expect(serviceSpy).toHaveBeenCalledWith(2);
+    expect(fakeCoursesService.removeCourse).toHaveBeenCalledWith(2);
   });
 
   it("should call FilterPipe transform method with a search query, when onSearchButtonClicked method is called", () => {
@@ -49,5 +50,4 @@ describe('CoursesComponent', () => {
     component.onSearchButtonClicked('course');
     expect(searchSpy).toHaveBeenCalledWith(component.courseList, 'course');
   });
-
 });

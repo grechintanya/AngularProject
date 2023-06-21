@@ -3,5 +3,5 @@
     <input type="text" placeholder="Text to search" [(ngModel)]="searchValue">
     <button mat-raised-button color="accent" (click)="onSearchButtonClicked()">Search</button>
 </div>
-<button mat-raised-button color="primary" (click)="onAddCourseButtonClicked()"><mat-icon>add</mat-icon>Add Course</button>
+<button mat-raised-button color="primary"><mat-icon>add</mat-icon><a routerLink="/courses/new">Add Course</a></button>
 </div>

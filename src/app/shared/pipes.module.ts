@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
-import { FormatDurationPipe } from '../utils/public_api';
+import { FormatDurationPipe, FormatDatePipe } from '../utils/public_api';
 
 @NgModule({
     declarations: [
-        FormatDurationPipe
+        FormatDurationPipe,
+        FormatDatePipe
     ],
     exports: [
-        FormatDurationPipe
+        FormatDurationPipe,
+        FormatDatePipe
     ]
 })
 export class PipesModule {}

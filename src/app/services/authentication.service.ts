@@ -1,3 +1,4 @@
+import { EventEmitter } from "@angular/core";
 import { User } from "../utils/public_api";
 
 export class AuthService {
@@ -12,11 +13,18 @@ export class AuthService {
     token = `ocRhi=-QMGck4RXFC2wfS/1LilN6FP3g2nXZNh4xytniAFLPkq0QuQqjX-?OM-ETO-Hz2I/hCNiYo!s/AO1y4DOB3B8NCD?=LnX-n6QLFm3exiejY6PiuzjZa?oxmsJE-qhKre1=Uv21?AFHH84gCxHjZBs8uIZVtgFpXKcLwQxCOPb=
             SMCPItqLgg0Yyys8VQ9Vluezo0nB5cIgMuWKtIjEfrpjfjNhbXHf46-yc4FTaVArV6?dqCsMtUa3hSex`
 
-    isAuthenticated = true
+    isAuthenticated = false;
+
+    loginButtonClicked = new EventEmitter<boolean>();
+    
+    onLoginButtonClicked(isAuth: boolean) {
+        this.loginButtonClicked.emit(isAuth);
+    }
 
     login() {
         localStorage.setItem('userName', this.user.userName);
         localStorage.setItem('token', this.token);
+        this.onLoginButtonClicked(true);
         this.isAuthenticated = true;
     }
 
@@ -29,4 +37,6 @@ export class AuthService {
     getUserInfo() {
         return this.user.userName
     }
+
+
 }

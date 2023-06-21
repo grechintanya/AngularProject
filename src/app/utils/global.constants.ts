@@ -2,7 +2,7 @@ import { Course } from './global.models';
 
 export const mockedCourses: Course[] = [
     {
-        id: 1,
+        id: '1',
         title: 'VideoCourse 1',
         creationDate: new Date('2022-12-03'),
         duration: 220,
@@ -13,7 +13,7 @@ export const mockedCourses: Course[] = [
         topRated: true
     },
     {
-        id: 2,
+        id: '2',
         title: 'videoCourse 2',
         creationDate: new Date('2023-06-10'),
         duration: 150,
@@ -24,7 +24,7 @@ export const mockedCourses: Course[] = [
         topRated: false
     },
     {
-        id: 3,
+        id: '3',
         title: 'VideoCourse 3',
         creationDate: new Date('2023-05-30'),
         duration: 120,

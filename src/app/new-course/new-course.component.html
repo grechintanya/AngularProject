@@ -1,15 +1,24 @@
-<form class="course_form">
-    <h1>New Course</h1>
-    <div class="label_container"><label for="title">Title:</label><span>*required</span></div>
-    <input type="text" placeholder="Add title" class="text_input" id="title" [(ngModel)]="title" name="title">
-    <div class="label_container"><label for="description">Description:</label><span>*required</span></div>
-    <textarea id="description" cols="30" rows="10" class="text_input" id="description" placeholder="Add description"
-        name="description" [(ngModel)]="description"></textarea>
-    <app-date></app-date>
-    <app-duration></app-duration>
-    <app-authors></app-authors>
-    <div class="buttons">
-        <button mat-raised-button (click)="onCancelButtonClicked()">Cancel</button>
-        <button mat-raised-button color="primary" (click)="onSaveButtonClicked()">Save</button>
-    </div>
-</form>
+<div class="container">
+    <app-breadcrumbs>
+        <span *ngIf="course !== undefined; else new">/ {{course.title}}</span>
+        <ng-template #new>/ New course</ng-template>
+    </app-breadcrumbs>
+    <form class="course_form">
+        <h1 *ngIf="course === undefined; else heading">New Course</h1>
+        <ng-template #heading>
+            <h1>{{ course?.title }}</h1>
+        </ng-template>
+        <div class="label_container"><label for="title">Title:</label><span>*required</span></div>
+        <input type="text" placeholder="Add title" class="text_input" id="title" [(ngModel)]="title" name="title">
+        <div class="label_container"><label for="description">Description:</label><span>*required</span></div>
+        <textarea id="description" cols="30" rows="10" class="text_input" id="description" placeholder="Add description"
+            name="description" [(ngModel)]="description"></textarea>
+        <app-date [(creationDate)]="date"></app-date>
+        <app-duration [(duration)]="duration"></app-duration>
+        <app-authors></app-authors>
+        <div class="buttons">
+            <button mat-raised-button (click)="onCancelButtonClicked()">Cancel</button>
+            <button mat-raised-button color="primary" (click)="onSaveButtonClicked()">Save</button>
+        </div>
+    </form>
+</div>

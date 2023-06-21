@@ -7,8 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { NewCourseComponent } from './new-course.component';
 import { DateComponent } from './date/date.component';
 import { DurationComponent } from './duration/duration.component';
-import {AuthorsComponent} from './authors/authors.component';
+import { AuthorsComponent } from './authors/authors.component';
 import { PipesModule } from '../shared/pipes.module';
+import { FormatDatePipe } from '../utils/public_api';
+import { BreadcrumbsModule } from '../shared';
 
 @NgModule({
     declarations: [
@@ -21,11 +23,12 @@ import { PipesModule } from '../shared/pipes.module';
         BrowserModule,
         FormsModule,
         MatButtonModule,
-        PipesModule
+        PipesModule,
+        BreadcrumbsModule
     ],
     exports: [
         NewCourseComponent
     ],
-    providers: []
+    providers: [FormatDatePipe]
 })
 export class NewCourseModule { }
