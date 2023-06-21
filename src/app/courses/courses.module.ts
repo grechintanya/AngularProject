@@ -16,6 +16,7 @@ import { CoursesService } from '../services';
 import { PipesModule } from '../shared/pipes.module';
 import { AppRoutingModule } from '../app-routing.module';
 
+
 @NgModule({
   declarations: [
     CoursesComponent,

@@ -12,13 +12,14 @@ import { ConfirmationModalComponent } from './modal/modal.component';
 })
 export class CoursesComponent implements OnInit {
   courseList: Course[] = [];
+
   filteredCourseList: Course[] = [];
 
   constructor(private filterPipe: FilterPipe,
     private coursesService: CoursesService,
     private dialog: MatDialog) {  }
 
-  onLoadMoreClick() {
+onLoadMoreClick() {
     console.log('load more...')
   }
 
