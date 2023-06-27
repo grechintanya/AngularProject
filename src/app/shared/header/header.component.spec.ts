@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthService } from 'src/app/services';
@@ -12,7 +13,8 @@ describe('HeaderComponent', () => {
         TestBed.configureTestingModule({
             declarations: [HeaderComponent, IfAuthenticatedDirective],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers: [AuthService]
+            providers: [AuthService],
+            imports: [HttpClientTestingModule]
         });
         fixture = TestBed.createComponent(HeaderComponent);
         component = fixture.componentInstance;

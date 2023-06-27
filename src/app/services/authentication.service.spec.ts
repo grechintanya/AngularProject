@@ -1,39 +1,33 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthService } from './authentication.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { baseURL } from '../utils/public_api';
 
 describe('AuthService', () => {
-    
+
     let authService: AuthService;
-    
+    let httpController: HttpTestingController;
+    const tokenObj = { token: 'fake token' };
+
     beforeEach(() => {
-        TestBed.configureTestingModule({providers: [AuthService]});
+        TestBed.configureTestingModule({ providers: [AuthService], imports: [HttpClientTestingModule] });
         authService = TestBed.inject(AuthService);
-        authService.user = {
-            id: 2,
-            userName: 'test',
-            email: 'email',
-            password: '123'
-        };
-        authService.token = 'test token';
-        localStorage.clear();
+        httpController = TestBed.inject(HttpTestingController);
     });
 
-    it('login method should save username and token in local storage', () => {
-        authService.login();
-        expect(localStorage.getItem('userName')).toBe('test');
-        expect(localStorage.getItem('token')).toBe('test token');
+    afterEach(() => {
+        httpController.verify();
     });
 
-    it('logout method should remove username and token from local storage', () => {
-        localStorage.setItem('userName', 'test');
-        localStorage.setItem('token', 'test token');
-        authService.logout();
-        expect(localStorage.getItem('userName')).toBeNull();
-        expect(localStorage.getItem('token')).toBeNull();
+    it('login method should post login request to the server', () => {
+        authService.login({ login: 'login', password: '123' });
+        const req = httpController.expectOne(`${baseURL}/auth/login`);
+        expect(req.request.method).toEqual('POST');
     });
 
-    it('getUserInfo method should return a username', () => {
-        const userInfo = authService.getUserInfo();
-        expect(userInfo).toBe('test');
+    it('getUserInfo method should make a post request to the server', () => {
+        authService.getUserInfo(tokenObj);
+        const req = httpController.expectOne(`${baseURL}/auth/userinfo`);
+        expect(req.request.method).toEqual('POST');
     });
 })

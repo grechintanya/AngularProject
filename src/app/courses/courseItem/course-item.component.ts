@@ -19,7 +19,7 @@ export class CourseItemComponent {
   new EventEmitter<DeleteButtonClickedEvent>();
 
   onDeleteButtonClicked() {
-    this.deleteButtonClicked.emit({courseID: this.course.id, title: this.course?.title})
+    this.deleteButtonClicked.emit({courseID: this.course.id, title: this.course?.name})
   }
 
   onEditButtonClicked() {

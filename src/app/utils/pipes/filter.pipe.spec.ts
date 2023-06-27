@@ -18,7 +18,7 @@ describe('FilterPipe', () => {
     it('should return an array of one course with title "VideoCourse 1", when the filterText is "course 1"', () => {
         const result = filterPipe.transform(coursesArray, 'course 1');
         expect(result.length).toBe(1);
-        expect(result[0].title).toBe('VideoCourse 1')
+        expect(result[0].name).toBe('VideoCourse 1')
     });
 
     it('should return an empty array, when the filterText equal "search"', () => {

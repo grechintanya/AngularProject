@@ -2,23 +2,26 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoursesComponent } from './courses.component';
 import { CoursesModule } from './courses.module';
-import { mockedCourses, FilterPipe } from '../utils/public_api';
+import { mockedCourses } from '../utils/public_api';
 import { CoursesService } from '../services';
+import { of } from 'rxjs';
 
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
   let fixture: ComponentFixture<CoursesComponent>;
-  let fakeCoursesService: jasmine.SpyObj<CoursesService>;
+  let coursesService: jasmine.SpyObj<CoursesService>;
 
   beforeEach(() => {
+    const spy = jasmine.createSpyObj('CoursesService', ['getCourseList', 'removeCourse']);
     TestBed.configureTestingModule({
       declarations: [CoursesComponent],
       imports: [CoursesModule],
-      providers: [CoursesService]
+      providers: [{provide: CoursesService, useValue: spy}]
     }).compileComponents();
     
     fixture = TestBed.createComponent(CoursesComponent);
-    fakeCoursesService = TestBed.inject(CoursesService) as jasmine.SpyObj<CoursesService>;
+    coursesService = TestBed.inject(CoursesService) as jasmine.SpyObj<CoursesService>;
+    coursesService.getCourseList.and.returnValue(of(mockedCourses));
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -27,27 +30,14 @@ describe('CoursesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize a course list in ngOnInit method', () => {
-    fakeCoursesService.getCourseList.and.returnValue(mockedCourses);
-    component.ngOnInit();
-    expect(component.courseList).toEqual(mockedCourses);
-  });
-
-  it('should log the "load more" message to the console when onLoadMoreClick method is called', () => {
-    const consoleSpy = spyOn(console, 'log');
+  it('should CoursesService getCourseList method, when onLoadMoreClick method is called', () => {
     component.onLoadMoreClick();
-    expect(consoleSpy).toHaveBeenCalledWith('load more...')
+    expect(coursesService.getCourseList).toHaveBeenCalledWith(3, 3);
   });
 
   it("should call CoursesService's method 'removeCourse', when deleteCourse method is called", () => {
+    coursesService.removeCourse.and.returnValue(of(null));
     component.deleteCourse(2);
-    expect(fakeCoursesService.removeCourse).toHaveBeenCalledWith(2);
-  });
-
-  it("should call FilterPipe transform method with a search query, when onSearchButtonClicked method is called", () => {
-    const filterPipe = TestBed.inject(FilterPipe);
-    const searchSpy = spyOn(filterPipe, 'transform');
-    component.onSearchButtonClicked('course');
-    expect(searchSpy).toHaveBeenCalledWith(component.courseList, 'course');
+    expect(coursesService.removeCourse).toHaveBeenCalledWith(2);
   });
 });

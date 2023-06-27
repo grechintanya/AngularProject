@@ -6,6 +6,6 @@ import { Course } from "../public_api";
 })
 export class OrderByPipe implements PipeTransform {
     transform(courses: Course[]) {
-        return courses.sort((a: Course, b: Course) => b.creationDate.getTime() - a.creationDate.getTime() )
+        return courses.sort((a: Course, b: Course) => new Date(b.date).getTime() - new Date(a.date).getTime() )
     }
 }

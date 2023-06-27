@@ -1,21 +1,42 @@
+export interface Author {
+    id: number,
+    name: string
+}
+
 export interface Course {
-    id: string | number,
-    title: string,
-    creationDate: Date,
-    duration: number,
+    id: number,
+    name: string,
+    date: string,
+    length: number,
     description: string,
-    topRated: boolean
+    isTopRated: boolean,
+    authors: Author[]
 }
 
 export interface DeleteButtonClickedEvent {
-    courseID: number | string, 
+    courseID: number, 
     title: string
 }
 
+export interface UserName {
+    first: string,
+    last: string
+}
+
+export interface Token {
+    token: string,
+}
+
+export interface Login {
+    login: string,
+    password: string
+}
+
 export interface User {
-    id: string | number,
-    userName: string,
-    email: string,
+    id: number,
+    token: string,
+    name: UserName,
+    login: string,
     password: string
 
 }
