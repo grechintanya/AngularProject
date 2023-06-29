@@ -80,16 +80,6 @@ describe('CoursesService', () => {
         expect(req.request.method).toBe('DELETE');
     });
 
-    it('searchCourses method should  call HTTP GET method and add a text fragment to URL', () => {
-        coursesService.searchCourses('videoCourse').subscribe(courses => {
-            expect(courses.length).toBe(3);
-            expect(courses[0].name).toBe('VideoCourse 1');
-        })
-        const req = httpController.expectOne(`${baseURL}/courses?textFragment=videoCourse`);
-        expect(req.request.method).toBe('GET');
-        req.flush(courseList);
-    });
-
     it('getCourseById method should call HTTP GET method, add course id to URL and return a course', () => {
         coursesService.getCourseById(1).subscribe(course => {
             expect(course.name).toBe('VideoCourse 1');

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoursesService, CourseResolver } from '../services';
+import { tap } from 'rxjs';
+import { CoursesService, LoaderService } from '../services';
 import { Course } from '../utils/public_api';
 
 @Component({
@@ -10,7 +11,7 @@ import { Course } from '../utils/public_api';
 })
 export class NewCourseComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute,
-    private coursesService: CoursesService, private courseResolver: CourseResolver) { }
+    private coursesService: CoursesService, private loaderService: LoaderService) { }
 
   courseID!: string | null;
   course: Course | undefined;
@@ -38,6 +39,7 @@ export class NewCourseComponent implements OnInit {
   }
 
   onSaveButtonClicked() {
+    this.loaderService.showLoader();
     const newCourse: Course = {
       id: Number(this.courseID),
       name: this.name,
@@ -48,11 +50,14 @@ export class NewCourseComponent implements OnInit {
       authors: []
     };
     if (this.courseID) {
-      this.coursesService.updateCourse(Number(this.courseID), newCourse).subscribe(data => {
-        if (data) this.router.navigateByUrl('courses');
-      });
+      this.coursesService.updateCourse(Number(this.courseID), newCourse)
+        .pipe(tap(() => this.loaderService.hideLoader()))
+        .subscribe(data => {
+          if (data) this.router.navigateByUrl('courses');
+        });
     } else {
       this.coursesService.createCourse(newCourse)
+        .pipe(tap(() => this.loaderService.hideLoader()))
         .subscribe((data) => {
           if (data) this.router.navigateByUrl('courses');
         });

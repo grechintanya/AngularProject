@@ -1,6 +1,6 @@
 <div class="container">
     <app-breadcrumbs></app-breadcrumbs>
-    <app-courses-header (searchButtonClicked)="onSearchButtonClicked($event)"></app-courses-header>
+    <app-courses-header></app-courses-header>
     <div *ngIf="courseList.length > 0; else message">
         <div class="courses" *ngFor="let item of courseList; trackBy: trackById">
             <app-course-item [course]="item" (deleteButtonClicked)="onDeleteButtonClicked($event)">

@@ -11,7 +11,7 @@ export class IfAuthenticatedDirective {
 
     }
 
-    @Input('appIfAuth') set DisplayView(condition: boolean) {
+    @Input('appIfAuth') set DisplayView(condition: boolean | null) {
         if (condition) {
             this.viewContainer.createEmbeddedView(this.template)
         } else {

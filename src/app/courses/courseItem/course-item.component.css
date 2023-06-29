@@ -3,9 +3,13 @@
     padding: 20px;
     border: 2px solid var(--main-color);
     border-radius: 5px;
+
+    align-items: center;
+}
+
+.card-body {
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
 .card-left {

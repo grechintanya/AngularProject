@@ -1,6 +1,7 @@
-<app-header (logoutButtonClicked)="onLogoutButtonClicked($event)"
-    [isAuth]="isAuth" [userName]="userName"
-></app-header>
+<app-header></app-header>
+<div *ngIf="showLoader$ | async as showLoader">
+    <app-loading *ngIf="showLoader"></app-loading>
+</div>
 <main>
     <router-outlet></router-outlet>
 </main>
