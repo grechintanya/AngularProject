@@ -10,11 +10,13 @@ import { AuthService } from '../services';
 export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
-  email = '';
+  login = '';
   password = '';
 
     onLoginButtonClicked() {
-    this.authService.login();
-    this.router.navigateByUrl('courses');
+      const loginObj = {login: this.login, password: this.password};
+      this.login = '';
+      this.password = '';
+    this.authService.login(loginObj);
     }
 }

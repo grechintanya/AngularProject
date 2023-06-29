@@ -1,8 +1,8 @@
 <div class="container">
     <app-breadcrumbs></app-breadcrumbs>
     <app-courses-header (searchButtonClicked)="onSearchButtonClicked($event)"></app-courses-header>
-    <div *ngIf="filteredCourseList.length > 0; else message">
-        <div class="courses" *ngFor="let item of filteredCourseList | orderByDate; trackBy: trackById">
+    <div *ngIf="courseList.length > 0; else message">
+        <div class="courses" *ngFor="let item of courseList; trackBy: trackById">
             <app-course-item [course]="item" (deleteButtonClicked)="onDeleteButtonClicked($event)">
             </app-course-item>
         </div>

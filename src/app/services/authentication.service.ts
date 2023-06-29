@@ -1,42 +1,55 @@
-import { EventEmitter } from "@angular/core";
-import { User } from "../utils/public_api";
+import { HttpClient } from "@angular/common/http";
+import { EventEmitter, Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import { catchError, Observable, of } from "rxjs";
+import { baseURL, Login, Token, User } from "../utils/public_api";
 
+
+@Injectable({ providedIn: "root" })
 export class AuthService {
 
-    user: User = {
-        id: 1,
-        userName: 'tanya',
-        email: 'tanya@email.com',
-        password: 'qwerty'
-    }
+    constructor(private http: HttpClient, private router: Router) { }
 
-    token = `ocRhi=-QMGck4RXFC2wfS/1LilN6FP3g2nXZNh4xytniAFLPkq0QuQqjX-?OM-ETO-Hz2I/hCNiYo!s/AO1y4DOB3B8NCD?=LnX-n6QLFm3exiejY6PiuzjZa?oxmsJE-qhKre1=Uv21?AFHH84gCxHjZBs8uIZVtgFpXKcLwQxCOPb=
-            SMCPItqLgg0Yyys8VQ9Vluezo0nB5cIgMuWKtIjEfrpjfjNhbXHf46-yc4FTaVArV6?dqCsMtUa3hSex`
+    user!: User;
 
     isAuthenticated = false;
 
+    private handleError<T>(operation: string, result?: T) {
+        return (error: any): Observable<T> => {
+            alert(`${operation}: ${error.error}`);
+            return of(result as T);
+        }
+    }
+
     loginButtonClicked = new EventEmitter<boolean>();
-    
+
     onLoginButtonClicked(isAuth: boolean) {
         this.loginButtonClicked.emit(isAuth);
     }
 
-    login() {
-        localStorage.setItem('userName', this.user.userName);
-        localStorage.setItem('token', this.token);
-        this.onLoginButtonClicked(true);
-        this.isAuthenticated = true;
+    login(loginObj: Login) {
+        this.http.post(`${baseURL}/auth/login`, loginObj)
+            .pipe(catchError(this.handleError('Login')))
+            .subscribe(data => {
+                this.getUserInfo(data as Token);
+                this.isAuthenticated = true;
+            });
     }
 
     logout() {
-        localStorage.removeItem('userName');
-        localStorage.removeItem('token');
         this.isAuthenticated = false;
     }
 
-    getUserInfo() {
-        return this.user.userName
+    getUserInfo(tokenObj: Token) {
+        this.http.post(`${baseURL}/auth/userinfo`, tokenObj)
+        .pipe(catchError(this.handleError('GetUserInfo')))
+        .subscribe(data => {
+            if (data) {
+                this.user = data as User;
+                this.user.token = tokenObj?.token;
+                this.onLoginButtonClicked(true);
+                this.router.navigateByUrl('courses');
+            }          
+        })
     }
-
-
 }

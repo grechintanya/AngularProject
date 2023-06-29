@@ -12,10 +12,10 @@ describe('OrderByPipe', () => {
     });
 
     it('the first course should have the creation date equal "2023-06-10"', () => {
-        expect(sortedCoursesList[0].creationDate).toEqual(new Date('2023-06-10'))
+        expect(sortedCoursesList[0].date).toEqual('2023-06-10')
     });
 
     it('the third course should have the creation date equal "2022-12-03"', () => {
-        expect(sortedCoursesList[2].creationDate).toEqual(new Date('2022-12-03'))
+        expect(sortedCoursesList[2].date).toEqual('2022-12-03')
     });
 })

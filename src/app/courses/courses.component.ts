@@ -15,27 +15,33 @@ export class CoursesComponent implements OnInit {
 
   filteredCourseList: Course[] = [];
 
-  constructor(private filterPipe: FilterPipe,
-    private coursesService: CoursesService,
+  constructor(private coursesService: CoursesService,
     private dialog: MatDialog) {  }
+  
+  onLoadMoreClick() {
+    const start = this.courseList.length;
+    this.coursesService.getCourseList(start, 3).subscribe(response => {
+      this.courseList = this.courseList.concat(response);
+    })
+  }
 
-onLoadMoreClick() {
-    console.log('load more...')
+  fetchCourses() {
+    this.coursesService.getCourseList().subscribe(response => {
+      this.courseList = response;
+    }); 
   }
 
   ngOnInit(): void {
-    this.courseList = this.coursesService.getCourseList();
-    this.filteredCourseList = this.filterPipe.transform(this.courseList, '');
+     this.fetchCourses();
   }
 
   trackById(index: number, item: Course): string | number {
     return item.id
   }
 
-  deleteCourse(courseID: number|string) {
-    this.coursesService.removeCourse(courseID);
-    this.courseList = this.coursesService.getCourseList();
-    this.filteredCourseList = this.filterPipe.transform(this.courseList, '');
+  deleteCourse(courseID: number) {
+    this.coursesService.removeCourse(courseID)
+      .subscribe(() => this.fetchCourses());
   }
 
   onDeleteButtonClicked(event: DeleteButtonClickedEvent) {
@@ -48,6 +54,6 @@ onLoadMoreClick() {
   }
 
   onSearchButtonClicked(searchText: string) {
-    this.filteredCourseList = this.filterPipe.transform(this.courseList, searchText)
+    this.coursesService.searchCourses(searchText).subscribe(response => this.courseList = response);
   }
 }

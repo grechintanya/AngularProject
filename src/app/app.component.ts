@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.authService.loginButtonClicked.subscribe((data: boolean) => {
       this.isAuth = data;
-      if (this.isAuth) this.userName = this.authService.getUserInfo();
+      if (this.isAuth) this.userName = this.authService.user?.name.first;
     } )
 
   }

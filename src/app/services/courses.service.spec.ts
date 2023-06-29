@@ -1,67 +1,119 @@
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Course } from '../utils/public_api';
+import { Course, baseURL } from '../utils/public_api';
+import { AuthService } from './authentication.service';
 import { CoursesService } from './courses.service';
 
 describe('CoursesService', () => {
     let coursesService: CoursesService;
+    let httpController: HttpTestingController;
+    let authService: AuthService;
+
+    const courseList = [
+        {
+            id: 1, name: 'VideoCourse 1', date: '2022-12-03',
+            length: 220, description: 'Course 1 description', isTopRated: true, authors: []
+        },
+        {
+            id: 2, name: 'videoCourse 2', date: '2023-06-10', length: 150,
+            description: 'Course 2 description', isTopRated: false, authors: []
+        },
+        {
+            id: 3, name: 'VideoCourse 3', date: '2023-05-30',
+            length: 120, description: 'Course 3 description', isTopRated: false, authors: []
+        }
+    ];
 
     beforeEach(() => {
-        TestBed.configureTestingModule({providers: [CoursesService]});
+        TestBed.configureTestingModule({
+            providers: [CoursesService, AuthService],
+            imports: [HttpClientTestingModule]
+        });
+
+        authService = TestBed.inject(AuthService);
+        httpController = TestBed.inject(HttpTestingController);
+
+        authService.user = {
+            id: 2,
+            token: 'test token',
+            name: { first: 'test', last: 'test' },
+            login: 'login',
+            password: '123'
+        };
+
         coursesService = TestBed.inject(CoursesService);
 
-        coursesService.courseList = [
-            {
-                id: 1, title: 'VideoCourse 1', creationDate: new Date('2022-12-03'),
-                duration: 220, description: 'Course 1 description', topRated: true
-            },
-            {
-                id: 2, title: 'videoCourse 2', creationDate: new Date('2023-06-10'),
-                duration: 150, description: 'Course 2 description', topRated: false
-            },
-            {
-                id: 3, title: 'VideoCourse 3', creationDate: new Date('2023-05-30'),
-                duration: 120, description: 'Course 3 description', topRated: false
-            }
-        ];
     });
 
-    it('getCourseList method should return an array of 3 items', () => {
-        const coursesArray = coursesService.getCourseList();
-        expect(coursesArray.length).toBe(3);
+    it('getCourseList method should call HTTPClient get method and return a list of courses', () => {
+        coursesService.getCourseList().subscribe(courses => {
+            expect(courses).toEqual(courseList);
+        });
+
+        const req = httpController.expectOne(`${baseURL}/courses?sort=date&start=0&count=10`);
+        expect(req.request.method).toBe('GET');
+        req.flush(courseList);
+
     });
 
-    it('createCourse method should push a new item in courseList', () => {
+    it('createCourse method should call HTTPClient methos POST with new course', () => {
         const newCourse: Course = {
             id: 4,
-            title: 'test',
+            name: 'test',
             description: 'course description',
-            duration: 10,
-            creationDate: new Date(),
-            topRated: true
+            length: 10,
+            date: '2023-06-12',
+            isTopRated: true,
+            authors: []
         };
-        coursesService.createCourse(newCourse);
-        const coursesArray = coursesService.getCourseList();
-        expect(coursesArray.length).toBe(4);
-        expect(coursesArray).toContain(newCourse);
+        coursesService.createCourse(newCourse).subscribe(course => {
+            expect(course).toEqual(newCourse);
+        });
+        const req = httpController.expectOne(`${baseURL}/courses`);
+        expect(req.request.method).toBe('POST');
+        req.flush(newCourse);
     });
 
-    it('getCourseById method with argument 1 should return a course with title "VideoCourse 1"', () => {
-        const item = coursesService.getCourseById(1);
-        expect(item?.title).toBe('VideoCourse 1');
+    it('removeCourse method should  call HTTP DELETE method and add course id to URL', () => {
+        coursesService.removeCourse(1).subscribe();
+        const req = httpController.expectOne(`${baseURL}/courses/1`);
+        expect(req.request.method).toBe('DELETE');
     });
 
-    it('updateCourse should overwrite an item with new course object', () => {
+    it('searchCourses method should  call HTTP GET method and add a text fragment to URL', () => {
+        coursesService.searchCourses('videoCourse').subscribe(courses => {
+            expect(courses.length).toBe(3);
+            expect(courses[0].name).toBe('VideoCourse 1');
+        })
+        const req = httpController.expectOne(`${baseURL}/courses?textFragment=videoCourse`);
+        expect(req.request.method).toBe('GET');
+        req.flush(courseList);
+    });
+
+    it('getCourseById method should call HTTP GET method, add course id to URL and return a course', () => {
+        coursesService.getCourseById(1).subscribe(course => {
+            expect(course.name).toBe('VideoCourse 1');
+        });
+        const req = httpController.expectOne(`${baseURL}/courses/1`);
+        expect(req.request.method).toBe('GET');
+        req.flush(courseList[0]);
+    });
+
+    it('updateCourse method should call HTTP PATCH method, add course id to URL and return updated course', () => {
         const newCourse: Course = {
             id: 1,
-            title: 'Test',
+            name: 'test',
             description: 'course description',
-            duration: 100,
-            creationDate: new Date(),
-            topRated: true
-        };
-        coursesService.updateCourse(1, newCourse);
-        const updatedItem = coursesService.getCourseById(1);
-        expect(updatedItem?.title).toBe('Test');
-        expect(updatedItem?.duration).toBe(100);
-    });
+            length: 10,
+            date: '2023-06-12',
+            isTopRated: true,
+            authors: []
+        };  
+        coursesService.updateCourse(1, newCourse).subscribe(course => {
+            expect(course.name).toBe('test')
+        });
+        const req = httpController.expectOne(`${baseURL}/courses/1`);
+        expect(req.request.method).toBe('PATCH');
+        req.flush(newCourse);
+    })
 })

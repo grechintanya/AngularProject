@@ -11,6 +11,8 @@ import { HeaderComponent, FooterComponent } from './shared';
 import { FilterPipe, IfAuthenticatedDirective } from './utils/public_api';
 import { AuthService, AuthGuardService, CourseResolver } from './services';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -27,9 +29,15 @@ import { NotfoundComponent } from './notfound/notfound.component';
     MatIconModule,
     CoursesModule,
     LoginModule,
-    NewCourseModule
+    NewCourseModule,
+    HttpClientModule
   ],
-  providers: [AuthService, AuthGuardService, CourseResolver],
+  providers: [
+    AuthService, 
+    AuthGuardService, 
+    CourseResolver, 
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

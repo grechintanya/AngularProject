@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService, CourseResolver } from '../services';
-import { FormatDatePipe, Course } from '../utils/public_api';
+import { Course } from '../utils/public_api';
 
 @Component({
   selector: 'app-new-course',
@@ -10,13 +10,12 @@ import { FormatDatePipe, Course } from '../utils/public_api';
 })
 export class NewCourseComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute,
-    private coursesService: CoursesService, private formatDatePipe: FormatDatePipe,
-    private courseResolver: CourseResolver) { }
+    private coursesService: CoursesService, private courseResolver: CourseResolver) { }
 
   courseID!: string | null;
   course: Course | undefined;
 
-  title!: string;
+  name!: string;
   description!: string;
   date!: string;
   duration!: number;
@@ -26,10 +25,10 @@ export class NewCourseComponent implements OnInit {
     if (this.courseID) {
       this.course = this.route.snapshot.data['course'];
       if (this.course) {
-        this.title = this.course.title;
+        this.name = this.course.name;
         this.description = this.course.description;
-        this.date = this.formatDatePipe.transform(this.course.creationDate);
-        this.duration = this.course.duration;
+        this.date = this.course.date;
+        this.duration = this.course.length;
       }
     }
   }
@@ -39,18 +38,25 @@ export class NewCourseComponent implements OnInit {
   }
 
   onSaveButtonClicked() {
+    const newCourse: Course = {
+      id: Number(this.courseID),
+      name: this.name,
+      description: this.description,
+      date: this.date,
+      length: this.duration,
+      isTopRated: false,
+      authors: []
+    };
     if (this.courseID) {
-      const newCourse: Course = {
-        id: this.courseID,
-        title: this.title,
-        description: this.description,
-        creationDate: new Date(this.date),
-        duration: this.duration,
-        topRated: false
-      };
-      this.coursesService.updateCourse(this.courseID, newCourse);
-      this.router.navigateByUrl('courses');
+      this.coursesService.updateCourse(Number(this.courseID), newCourse).subscribe(data => {
+        if (data) this.router.navigateByUrl('courses');
+      });
+    } else {
+      this.coursesService.createCourse(newCourse)
+        .subscribe((data) => {
+          if (data) this.router.navigateByUrl('courses');
+        });
     }
-
   }
 }
+

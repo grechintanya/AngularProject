@@ -1,26 +1,50 @@
-import { mockedCourses, Course } from "../utils/public_api";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { catchError, Observable, of } from "rxjs";
+import { Course, baseURL } from "../utils/public_api";
 
+
+@Injectable({ providedIn: "root" })
 export class CoursesService {
 
-    courseList: Course[] = [...mockedCourses];
+    constructor(private http: HttpClient) { }
 
-    getCourseList() {
-        return this.courseList;
+    courseList: Course[] = [];
+
+    private handleError<T>(operation: string, result?: T) {
+        return (error: any): Observable<T> => {
+            alert(`${operation}: ${error.message}`);
+            return of(result as T);
+        }
     }
 
-    createCourse(newCourse: Course) {
-        this.courseList = [...this.courseList, newCourse]
+    getCourseList(start=0, count=10): Observable<Course[]> {
+        return this.http.get<Course[]>(`${baseURL}/courses?sort=date&start=${start}&count=${count}`)
+             .pipe(catchError(this.handleError<Course[]>('GetCourseList', [])))
     }
 
-    getCourseById(courseID: number | string) {
-        return this.courseList.find(item => item.id === courseID)
+    createCourse(newCourse: Course): Observable<Course> {
+        return this.http.post<Course>(`${baseURL}/courses`, newCourse)
+            .pipe(catchError(this.handleError<Course>('CreateCourse')))
     }
 
-    updateCourse(courseID: number | string, newCourse: Course) {
-        this.courseList = this.courseList.map(item => item.id === courseID ? newCourse : item)
+    getCourseById(courseID: number): Observable<Course>  {
+        return this.http.get<Course>(`${baseURL}/courses/${courseID}`)
+        .pipe(catchError(this.handleError<Course>(`Get course by id ${courseID}`)))
     }
 
-    removeCourse(courseID: number | string) {
-        this.courseList = this.courseList.filter(item => item.id !== courseID)
+    updateCourse(courseID: number, newCourse: Course) {
+        return this.http.patch<Course>(`${baseURL}/courses/${courseID}`, newCourse)
+        .pipe(catchError(this.handleError<Course>(`Update course with id ${courseID}`)))
+    }
+
+    removeCourse(courseID: number): Observable<any> {
+        return this.http.delete<any>(`${baseURL}/courses/${courseID}`)
+            .pipe(catchError(this.handleError<any>('RemoveCourse')))
+    }
+
+    searchCourses(text: string): Observable<Course[]> {
+        return this.http.get<Course[]>(`${baseURL}/courses?textFragment=${text}`)
+            .pipe(catchError(this.handleError<Course[]>('SearchCourses')))
     }
 }
