@@ -1,21 +1,23 @@
 <div class="course-item" appSetBorder [creationDate]="course.date" [ngClass]="{'top_rated': course.isTopRated}">
-    <div class="card-left">
-        <div class="card-header">
-            <h3>{{ course.name | uppercase }}<mat-icon *ngIf="course.isTopRated" class="star">star</mat-icon>
-            </h3>
-            <p>
-                <mat-icon>access_time</mat-icon><span>{{ course.length | formatDuration }}</span>
-                <mat-icon>calendar_today</mat-icon><span>{{ course.date | date: 'medium' }}</span>
-            </p>
-        </div>
-        <div class="description">{{ course.description }}</div>
+    <div class="card-header">
+        <h3>{{ course.name | uppercase }}<mat-icon *ngIf="course.isTopRated" class="star">star</mat-icon>
+        </h3>
+        <p>
+            <mat-icon>access_time</mat-icon><span>{{ course.length | formatDuration }}</span>
+            <mat-icon>calendar_today</mat-icon><span>{{ course.date | date: 'medium' }}</span>
+        </p>
     </div>
-    <div class="buttons">
-        <button mat-raised-button color="primary" (click)="onEditButtonClicked()">
-            <mat-icon>edit</mat-icon>Edit
-        </button>
-        <button mat-raised-button color="primary" (click)="onDeleteButtonClicked()">
-            <mat-icon>delete</mat-icon>Delete
-        </button>
+    <div class="card-body">
+        <div class="card-left">
+            <div class="description">{{ course.description }}</div>
+        </div>
+        <div class="buttons">
+            <button mat-raised-button color="primary" (click)="onEditButtonClicked()">
+                <mat-icon>edit</mat-icon>Edit
+            </button>
+            <button mat-raised-button color="primary" (click)="onDeleteButtonClicked()">
+                <mat-icon>delete</mat-icon>Delete
+            </button>
+        </div>
     </div>
 </div>

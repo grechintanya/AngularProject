@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from './services';
+import { delay, Observable } from 'rxjs';
+import { AuthService, LoaderService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -8,22 +9,17 @@ import { AuthService } from './services';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService,
+    private router: Router,
+    private loaderService: LoaderService
+  ) { }
 
-  isAuth = false;
-  userName = '';
+    showLoader$!: Observable<boolean>;
 
   ngOnInit(): void {
-    this.authService.loginButtonClicked.subscribe((data: boolean) => {
-      this.isAuth = data;
-      if (this.isAuth) this.userName = this.authService.user?.name.first;
-    } )
+    this.showLoader$ = this.loaderService.loadingAction$.pipe(delay(0));
 
   }
 
-  onLogoutButtonClicked(isAuth: boolean) {
-    this.authService.logout();
-    this.isAuth = isAuth;
-    this.router.navigateByUrl('login');
-  }
+
 }

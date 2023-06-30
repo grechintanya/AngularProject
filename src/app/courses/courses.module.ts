@@ -12,7 +12,6 @@ import { CoursesHeaderComponent } from './coursesHeader/courses-header.component
 import { ConfirmationModalComponent } from './modal/modal.component';
 import { BreadcrumbsModule } from '../shared';
 import { setBorderDirective, FilterPipe, OrderByPipe } from '../utils/public_api';
-import { CoursesService } from '../services';
 import { PipesModule } from '../shared/pipes.module';
 import { AppRoutingModule } from '../app-routing.module';
 
@@ -40,8 +39,7 @@ import { AppRoutingModule } from '../app-routing.module';
     CoursesComponent
   ],
   providers: [
-    FilterPipe,
-    CoursesService
+    FilterPipe
   ],
 
 })

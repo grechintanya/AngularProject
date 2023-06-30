@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CoursesService } from 'src/app/services';
 
 @Component({
   selector: 'app-courses-header',
@@ -7,15 +8,16 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class CoursesHeaderComponent {
   
-  searchValue = 'qwerty';
 
-  @Output()
-  searchButtonClicked: EventEmitter<string> = new EventEmitter<string>();
+  constructor(private coursesService: CoursesService) {}
 
-  onSearchButtonClicked() {
-    this.searchButtonClicked.emit(this.searchValue);
-    this.searchValue = '';
+
+  
+
+  onKeyUp(event: any) {
+    this.coursesService.searchQuery.next(event.target.value);
   }
+
 
   @Output()
   addCourseButtonClicked: EventEmitter<boolean> = new EventEmitter<boolean>();

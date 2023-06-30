@@ -1,7 +1,7 @@
 <header>
     <div class="container header">
         <div class="logo"><mat-icon>play_circle_outline</mat-icon>VIDEO COURSE</div>
-        <div class="user-options" *appIfAuth="isAuth">
+        <div class="user-options" *appIfAuth="isAuth | async">
             <button><mat-icon>person</mat-icon>{{ userName }}</button>
             <button (click)="onLogoutButtonClicked()" ><mat-icon>exit_to_app</mat-icon>Log Out</button>
         </div>
