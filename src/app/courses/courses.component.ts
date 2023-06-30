@@ -20,7 +20,6 @@ export class CoursesComponent implements OnInit {
   searchQueryEmitter = this.coursesService.searchQuery;
   searchQuery!: string;
 
-
   onLoadMoreClick() {
     const start = this.courseList.length;
     this.coursesService.getCourseList(start, 3).subscribe(response => {

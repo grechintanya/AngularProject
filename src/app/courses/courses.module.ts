@@ -15,6 +15,7 @@ import { setBorderDirective, FilterPipe, OrderByPipe } from '../utils/public_api
 import { PipesModule } from '../shared/pipes.module';
 import { AppRoutingModule } from '../app-routing.module';
 
+
 @NgModule({
   declarations: [
     CoursesComponent,
