@@ -1,19 +1,27 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { map, mergeMap, Observable, of } from 'rxjs';
+import { AppState } from '../store/appState.interface';
 import { Course } from '../utils/public_api';
 import { CoursesService } from './courses.service';
+import { selectCourseById } from '../store/courses';
 
 @Injectable()
 export class CourseResolver implements Resolve<Course | undefined> {
-    constructor(private coursesService: CoursesService) { }
+    constructor(private coursesService: CoursesService, private store: Store<AppState>) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Course> | undefined {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Course | undefined> {
         const id = route.paramMap.get('id');
         if (id) {
-            return this.coursesService.getCourseById(Number(id))
-        } else {
-            return undefined;
+            const course$ = this.store.select(selectCourseById(Number(id)));
+            return course$.pipe(mergeMap(course => {
+                if (course) return of(course);
+                else {
+                    return this.coursesService.getCourseById(Number(id))
+                }
+            }))
         }
+        return of(undefined);
     }
 }

@@ -1,3 +1,7 @@
+<app-loading *ngIf="showAuthLoader$ | async"></app-loading>
+<div class="error" *ngIf="authError$ | async as error">{{ error }}
+    <button (click)="onCloseClicked()"><mat-icon>close</mat-icon></button>
+</div>
 <form class="login_form">
     <h1>Login</h1>
     <div><label for="email_input">Email:</label><span>*required</span></div>

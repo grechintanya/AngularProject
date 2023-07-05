@@ -2,9 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Course, DeleteButtonClickedEvent } from '../utils/public_api';
-import { CoursesService, LoaderService } from '../services';
+import { CoursesService } from '../services';
 import { ConfirmationModalComponent } from './modal/modal.component';
-import { debounce, filter, interval, tap } from 'rxjs';
+import { debounceTime, filter, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/appState.interface';
+import {
+  selectCoursesList, coursesActions, selectCoursesListLength,
+  selectSearchQuery, selectIsLoading, selectError
+} from '../store/courses';
 
 @Component({
   selector: 'app-courses',
@@ -14,37 +20,34 @@ import { debounce, filter, interval, tap } from 'rxjs';
 export class CoursesComponent implements OnInit {
 
   constructor(private coursesService: CoursesService,
-    private dialog: MatDialog, private loaderService: LoaderService) { }
-
-  courseList: Course[] = [];
-  searchQueryEmitter = this.coursesService.searchQuery;
-  searchQuery!: string;
-
-
-  onLoadMoreClick() {
-    const start = this.courseList.length;
-    this.coursesService.getCourseList(start, 3).subscribe(response => {
-      this.courseList = this.courseList.concat(response);
-    })
+    private dialog: MatDialog, private store: Store<AppState>) {
+    this.coursesList$ = this.store.select(selectCoursesList);
+    this.start$ = this.store.select(selectCoursesListLength);
+    this.searchQuery$ = this.store.select(selectSearchQuery);
+    this.showCoursesLoader$ = this.store.select(selectIsLoading);
+    this.coursesError$ = this.store.select(selectError);
   }
 
-  fetchCourses() {
-    this.coursesService.getCourseList().pipe(
-      tap(() => this.loaderService.hideLoader()),
-    ).subscribe(response => {
-      this.courseList = response;
-    });
+  showCoursesLoader$: Observable<boolean>;
+  coursesError$: Observable<string | null>;
+  coursesList$!: Observable<Course[]>;
+  start$!: Observable<number>;
+  start!: number;
+  searchQuery$!: Observable<string>;
+  searchQuery!: string;
+
+  onLoadMoreClick() {
+    this.store.dispatch(coursesActions.loadMoreClicked({ start: this.start, searchQuery: this.searchQuery }));
   }
 
   ngOnInit(): void {
-    this.loaderService.showLoader();
-    this.fetchCourses();
-    this.searchQueryEmitter
-      .pipe(filter(x => x.length >= 3 || x.length === 0), debounce(() => interval(300)))
-      .subscribe(value => {
-        this.searchQuery = value;
-        this.coursesService.getCourseList(0, 10, value).subscribe(courses => this.courseList = courses);
-      });
+    this.store.dispatch(coursesActions.getCourses());
+    this.start$.subscribe(value => this.start = value);
+    this.searchQuery$.subscribe(value => this.searchQuery = value);
+
+    this.coursesService.searchQuery
+      .pipe(filter(x => x.length >= 3 || x.length === 0), debounceTime(300))
+      .subscribe(value => this.store.dispatch(coursesActions.searchQueryEntered({ searchQuery: value })));
   }
 
   trackById(index: number, item: Course): string | number {
@@ -52,10 +55,7 @@ export class CoursesComponent implements OnInit {
   }
 
   deleteCourse(courseID: number) {
-    this.loaderService.showLoader();
-    this.coursesService.removeCourse(courseID)
-      .pipe(tap(() => this.loaderService.hideLoader()))
-      .subscribe(() => this.fetchCourses());
+    this.store.dispatch(coursesActions.deleteCourse({ id: courseID }));
   }
 
   onDeleteButtonClicked(event: DeleteButtonClickedEvent) {
@@ -65,5 +65,9 @@ export class CoursesComponent implements OnInit {
         this.deleteCourse(event.courseID);
       }
     });
+  }
+
+  onCloseClicked() {
+    this.store.dispatch(coursesActions.errorMessageClosed());
   }
 }

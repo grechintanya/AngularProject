@@ -24,5 +24,6 @@ export class CourseItemComponent {
 
   onEditButtonClicked() {
     this.router.navigateByUrl(`courses/${this.course.id}`);
+    
   }
 }

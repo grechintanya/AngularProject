@@ -1,4 +1,8 @@
 <div class="container">
+    <app-loading *ngIf="showCoursesLoader$ | async"></app-loading>
+    <div class="error" *ngIf="coursesError$ | async as error">{{ error }}
+        <button (click)="onCloseClicked()"><mat-icon>close</mat-icon></button>
+    </div>
     <app-breadcrumbs>
         <span *ngIf="course !== undefined; else new">/ {{course.name}}</span>
         <ng-template #new>/ New course</ng-template>

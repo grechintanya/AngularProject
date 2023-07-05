@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap } from 'rxjs';
-import { CoursesService, LoaderService } from '../services';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/appState.interface';
 import { Course } from '../utils/public_api';
+import { coursesActions, selectError, selectIsLoading } from '../store/courses';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-course',
@@ -11,15 +13,21 @@ import { Course } from '../utils/public_api';
 })
 export class NewCourseComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute,
-    private coursesService: CoursesService, private loaderService: LoaderService) { }
+    private store: Store<AppState>) { 
+      this.showCoursesLoader$ = this.store.select(selectIsLoading);
+      this.coursesError$ = this.store.select(selectError);
+    }
 
   courseID!: string | null;
-  course: Course | undefined;
 
+  course: Course | undefined;
   name!: string;
   description!: string;
   date!: string;
   duration!: number;
+
+  showCoursesLoader$: Observable<boolean>;
+  coursesError$: Observable<string | null>;
 
   ngOnInit() {
     this.courseID = this.route.snapshot.paramMap.get('id');
@@ -39,7 +47,6 @@ export class NewCourseComponent implements OnInit {
   }
 
   onSaveButtonClicked() {
-    this.loaderService.showLoader();
     const newCourse: Course = {
       id: Number(this.courseID),
       name: this.name,
@@ -50,18 +57,14 @@ export class NewCourseComponent implements OnInit {
       authors: []
     };
     if (this.courseID) {
-      this.coursesService.updateCourse(Number(this.courseID), newCourse)
-        .pipe(tap(() => this.loaderService.hideLoader()))
-        .subscribe(data => {
-          if (data) this.router.navigateByUrl('courses');
-        });
+      this.store.dispatch(coursesActions.updateCourse({id: Number(this.courseID), course: newCourse}));
     } else {
-      this.coursesService.createCourse(newCourse)
-        .pipe(tap(() => this.loaderService.hideLoader()))
-        .subscribe((data) => {
-          if (data) this.router.navigateByUrl('courses');
-        });
+      this.store.dispatch(coursesActions.createCourse({newCourse: newCourse}));
     }
+  }
+
+  onCloseClicked() {
+    this.store.dispatch(coursesActions.errorMessageClosed());
   }
 }
 

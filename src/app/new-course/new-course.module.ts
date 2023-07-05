@@ -10,7 +10,8 @@ import { DurationComponent } from './duration/duration.component';
 import { AuthorsComponent } from './authors/authors.component';
 import { PipesModule } from '../shared/pipes.module';
 import { FormatDatePipe } from '../utils/public_api';
-import { BreadcrumbsModule } from '../shared';
+import { BreadcrumbsModule, LoadingModule } from '../shared';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [
@@ -23,8 +24,10 @@ import { BreadcrumbsModule } from '../shared';
         BrowserModule,
         FormsModule,
         MatButtonModule,
+        MatIconModule,
         PipesModule,
-        BreadcrumbsModule
+        BreadcrumbsModule,
+        LoadingModule
     ],
     exports: [
         NewCourseComponent

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService, LoaderService } from '../services';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from '../store/appState.interface';
+import { authActions, selectIsLoading, selectError } from '../store/auth';
 
 @Component({
   selector: 'app-login',
@@ -8,17 +10,24 @@ import { AuthService, LoaderService } from '../services';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private authService: AuthService, private router: Router,
-    private loaderService: LoaderService) { }
+  constructor(private store: Store<AppState>) {
+    this.showAuthLoader$ = this.store.select(selectIsLoading);
+    this.authError$ = this.store.select(selectError);
+   }
 
   login = '';
   password = '';
 
+  showAuthLoader$!: Observable<boolean>;
+  authError$: Observable<string | null>;
+
   onLoginButtonClicked() {
-    this.loaderService.showLoader();
-    const loginObj = { login: this.login, password: this.password };
+    this.store.dispatch(authActions.login({ login: this.login, password: this.password }));
     this.login = '';
     this.password = '';
-    this.authService.login(loginObj);
+  }
+
+  onCloseClicked() {
+    this.store.dispatch(authActions.errorMessageClosed());
   }
 }
