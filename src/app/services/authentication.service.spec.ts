@@ -11,8 +11,8 @@ describe('AuthService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({ providers: [AuthService], imports: [HttpClientTestingModule] });
-        authService = TestBed.inject(AuthService);
         httpController = TestBed.inject(HttpTestingController);
+        authService = TestBed.inject(AuthService);
     });
 
     afterEach(() => {
@@ -20,13 +20,13 @@ describe('AuthService', () => {
     });
 
     it('login method should post login request to the server', () => {
-        authService.login({ login: 'login', password: '123' });
+        authService.login({ login: 'login', password: '123' }).subscribe();
         const req = httpController.expectOne(`${baseURL}/auth/login`);
         expect(req.request.method).toEqual('POST');
     });
 
     it('getUserInfo method should make a post request to the server', () => {
-        authService.getUserInfo(tokenObj);
+        authService.getUserInfo(tokenObj).subscribe();
         const req = httpController.expectOne(`${baseURL}/auth/userinfo`);
         expect(req.request.method).toEqual('POST');
     });

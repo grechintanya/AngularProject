@@ -1,10 +1,18 @@
 <div class="container">
+    <app-loading *ngIf="showCoursesLoader$ | async"></app-loading>
+    <div class="error" *ngIf="coursesError$ | async as error">{{ error }}
+        <button (click)="onCloseClicked()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
     <app-breadcrumbs></app-breadcrumbs>
     <app-courses-header></app-courses-header>
-    <div *ngIf="courseList.length > 0; else message">
-        <div class="courses" *ngFor="let item of courseList; trackBy: trackById">
-            <app-course-item [course]="item" (deleteButtonClicked)="onDeleteButtonClicked($event)">
-            </app-course-item>
+    <div *ngIf="coursesList$ | async as coursesList">
+        <div *ngIf="coursesList.length > 0; else message">
+            <div class="courses" *ngFor="let item of coursesList$ | async; trackBy: trackById">
+                <app-course-item [course]="item" (deleteButtonClicked)="onDeleteButtonClicked($event)">
+                </app-course-item>
+            </div>
         </div>
         <button class="load" (click)="onLoadMoreClick()">Load more</button>
     </div>

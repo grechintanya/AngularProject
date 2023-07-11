@@ -33,10 +33,10 @@ export interface Login {
 }
 
 export interface User {
-    id: number,
+    id?: number,
     token: string,
-    name: UserName,
-    login: string,
-    password: string
+    name?: UserName,
+    login?: string,
+    password?: string
 
 }

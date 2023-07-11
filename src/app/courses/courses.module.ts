@@ -10,7 +10,7 @@ import { CoursesComponent } from './courses.component';
 import { CourseItemComponent } from './courseItem/course-item.component';
 import { CoursesHeaderComponent } from './coursesHeader/courses-header.component';
 import { ConfirmationModalComponent } from './modal/modal.component';
-import { BreadcrumbsModule } from '../shared';
+import { BreadcrumbsModule, LoadingModule } from '../shared';
 import { setBorderDirective, FilterPipe, OrderByPipe } from '../utils/public_api';
 import { PipesModule } from '../shared/pipes.module';
 import { AppRoutingModule } from '../app-routing.module';
@@ -33,7 +33,8 @@ import { AppRoutingModule } from '../app-routing.module';
     MatDialogModule,
     PipesModule,
     AppRoutingModule,
-    BreadcrumbsModule
+    BreadcrumbsModule,
+    LoadingModule
   ],
   exports: [
     CoursesComponent

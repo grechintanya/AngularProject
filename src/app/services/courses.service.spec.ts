@@ -7,7 +7,6 @@ import { CoursesService } from './courses.service';
 describe('CoursesService', () => {
     let coursesService: CoursesService;
     let httpController: HttpTestingController;
-    let authService: AuthService;
 
     const courseList = [
         {
@@ -30,19 +29,13 @@ describe('CoursesService', () => {
             imports: [HttpClientTestingModule]
         });
 
-        authService = TestBed.inject(AuthService);
         httpController = TestBed.inject(HttpTestingController);
-
-        authService.user = {
-            id: 2,
-            token: 'test token',
-            name: { first: 'test', last: 'test' },
-            login: 'login',
-            password: '123'
-        };
-
         coursesService = TestBed.inject(CoursesService);
 
+    });
+
+    afterEach(() => {
+        httpController.verify();
     });
 
     it('getCourseList method should call HTTPClient get method and return a list of courses', () => {
@@ -50,7 +43,7 @@ describe('CoursesService', () => {
             expect(courses).toEqual(courseList);
         });
 
-        const req = httpController.expectOne(`${baseURL}/courses?sort=date&start=0&count=10`);
+        const req = httpController.expectOne(`${baseURL}/courses?sort=date&start=0&count=10&textFragment=`);
         expect(req.request.method).toBe('GET');
         req.flush(courseList);
 
@@ -98,7 +91,7 @@ describe('CoursesService', () => {
             date: '2023-06-12',
             isTopRated: true,
             authors: []
-        };  
+        };
         coursesService.updateCourse(1, newCourse).subscribe(course => {
             expect(course.name).toBe('test')
         });
