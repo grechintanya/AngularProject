@@ -13,26 +13,27 @@ describe('HeaderComponent', () => {
     let fixture: ComponentFixture<HeaderComponent>;
     const initialState: AppState = {
         auth: {
-          user: {token: ''},
-          isLoading: false,
-          error: null,
-          isAuthenticated: false,
+            user: { token: '' },
+            isLoading: false,
+            error: null,
+            isAuthenticated: false,
         },
         courses: {
-          courses: [],
-          isLoading: false,
-          error: null,
-          searchQuery: ''
-        }
-      }
-      let store: Store<AppState>;
+            courses: [],
+            isLoading: false,
+            error: null,
+            searchQuery: '',
+            allAuthors: [],
+        },
+    };
+    let store: Store<AppState>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [HeaderComponent, IfAuthenticatedDirective],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [provideMockStore({ initialState })],
-            imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])]
+            imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
         });
         fixture = TestBed.createComponent(HeaderComponent);
         store = TestBed.inject(Store<AppState>) as jasmine.SpyObj<Store<AppState>>;

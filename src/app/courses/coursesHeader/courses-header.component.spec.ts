@@ -13,15 +13,16 @@ describe('CoursesHeaderComponent', () => {
         courses: [],
         isLoading: false,
         error: null,
-        searchQuery: ''
-      }
+        searchQuery: '',
+        allAuthors: [],
+    };
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [CoursesHeaderComponent],
             imports: [FormsModule, HttpClientTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers: [provideMockStore({ initialState })]
+            providers: [provideMockStore({ initialState })],
         }).compileComponents();
     });
 
@@ -34,5 +35,4 @@ describe('CoursesHeaderComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-    
 });

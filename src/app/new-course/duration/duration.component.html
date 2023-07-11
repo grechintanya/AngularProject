@@ -1,7 +1,14 @@
 <div class="label_container">
     <label for="duration">Duration:</label>
 </div>
-<div><input type="number" id="duration" placeholder="Add duration" 
-    [(ngModel)]="duration" (blur)="changeDuration()">
-    <span>{{ duration | formatDuration }}</span>
+<div>
+    <input
+        type="text"
+        id="duration"
+        placeholder="Add duration"
+        [(ngModel)]="duration"
+        (blur)="onTouched()"
+        [ngClass]="{ invalid: errors }"
+    />
+    <span *ngIf="!errors">{{ duration | formatDuration }}</span>
 </div>

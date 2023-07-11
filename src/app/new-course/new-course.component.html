@@ -1,28 +1,83 @@
 <div class="container">
     <app-loading *ngIf="showCoursesLoader$ | async"></app-loading>
-    <div class="error" *ngIf="coursesError$ | async as error">{{ error }}
-        <button (click)="onCloseClicked()"><mat-icon>close</mat-icon></button>
+    <div class="error_message" *ngIf="coursesError$ | async as error">
+        {{ error }}
+        <button (click)="onCloseClicked()">
+            <mat-icon>close</mat-icon>
+        </button>
     </div>
     <app-breadcrumbs>
-        <span *ngIf="course !== undefined; else new">/ {{course.name}}</span>
+        <span *ngIf="course !== undefined; else new">/ {{ course.name }}</span>
         <ng-template #new>/ New course</ng-template>
     </app-breadcrumbs>
-    <form class="course_form">
+    <form class="course_form" [formGroup]="courseForm" (submit)="onSaveButtonClicked()">
         <h1 *ngIf="course === undefined; else heading">New Course</h1>
         <ng-template #heading>
             <h1>{{ course?.name }}</h1>
         </ng-template>
+
         <div class="label_container"><label for="title">Title:</label><span>*required</span></div>
-        <input type="text" placeholder="Add title" class="text_input" id="title" [(ngModel)]="name" name="title">
-        <div class="label_container"><label for="description">Description:</label><span>*required</span></div>
-        <textarea id="description" cols="30" rows="10" class="text_input" id="description" placeholder="Add description"
-            name="description" [(ngModel)]="description"></textarea>
-        <app-date [(creationDate)]="date"></app-date>
-        <app-duration [(duration)]="duration"></app-duration>
-        <app-authors></app-authors>
+        <input
+            type="text"
+            placeholder="Add title"
+            class="text_input"
+            id="title"
+            formControlName="name"
+        />
+        <div *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+            <div class="error" *ngIf="name?.errors?.['required']">Title is required</div>
+            <div class="error" *ngIf="name?.errors?.['maxlength']">
+                Title should be less than 50 characters
+            </div>
+        </div>
+
+        <div class="label_container">
+            <label for="description">Description:</label><span>*required</span>
+        </div>
+        <textarea
+            id="description"
+            cols="30"
+            rows="10"
+            class="text_input"
+            placeholder="Add description"
+            formControlName="description"
+        ></textarea>
+        <div *ngIf="description?.invalid && (description?.dirty || description?.touched)">
+            <div class="error" *ngIf="description?.errors?.['required']">
+                Description is required
+            </div>
+            <div class="error" *ngIf="description?.errors?.['maxlength']">
+                Description should be less than 500 characters
+            </div>
+        </div>
+
+        <app-date formControlName="date"></app-date>
+        <div *ngIf="date?.invalid && (date?.dirty || date?.touched)">
+            <div class="error" *ngIf="date?.errors?.['required']">Date is required</div>
+            <div class="error" *ngIf="date?.errors?.['invalidDateFormat']">
+                Invalid date format. Please, enter date in 'dd/mm/yyyy' format.
+            </div>
+        </div>
+
+        <app-duration formControlName="length"></app-duration>
+        <div *ngIf="length?.invalid && (length?.dirty || length?.touched)">
+            <div class="error" *ngIf="length?.errors?.['required']">Duration is required</div>
+            <div class="error" *ngIf="length?.errors?.['onlyNumber']">
+                Duration must be a number.
+            </div>
+        </div>
+
+        <app-authors formControlName="authors"></app-authors>
+        <div *ngIf="authors?.invalid && authors?.touched">
+            <div class="error" *ngIf="authors?.errors?.['noAuthor']">
+                Select at least one author
+            </div>
+        </div>
         <div class="buttons">
             <button mat-raised-button (click)="onCancelButtonClicked()">Cancel</button>
-            <button mat-raised-button color="primary" (click)="onSaveButtonClicked()">Save</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="courseForm.invalid">
+                Save
+            </button>
         </div>
     </form>
 </div>

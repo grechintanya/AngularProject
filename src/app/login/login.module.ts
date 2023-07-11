@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 
@@ -9,19 +9,16 @@ import { LoadingModule } from '../shared';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-    declarations: [
-        LoginComponent
-    ],
+    declarations: [LoginComponent],
     imports: [
         BrowserModule,
         FormsModule,
         MatButtonModule,
         LoadingModule,
-        MatIconModule
+        MatIconModule,
+        ReactiveFormsModule,
     ],
-    exports: [
-        LoginComponent
-    ],
-    providers: []
+    exports: [LoginComponent],
+    providers: [],
 })
 export class LoginModule {}
