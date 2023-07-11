@@ -30,3 +30,14 @@
 .buttons button {
     margin-right: 10px;
 }
+
+.error {
+    background-color: lightpink;
+    padding: 10px;
+}
+
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+    border: 2px solid var(--warn-color);
+}
+
+

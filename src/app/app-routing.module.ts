@@ -7,16 +7,21 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { AuthGuardService, CourseResolver } from './services';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'courses', pathMatch: 'full'},
-  {path: 'courses', component: CoursesComponent, canActivate: [AuthGuardService]},
-  {path: 'login', component: LoginComponent},
-  {path: 'courses/new', component: NewCourseComponent, canActivate: [AuthGuardService]},
-  {path: 'courses/:id', component: NewCourseComponent, canActivate: [AuthGuardService], resolve: {course: CourseResolver}},
-  {path: '**', component: NotfoundComponent}
+    { path: '', redirectTo: 'courses', pathMatch: 'full' },
+    { path: 'courses', component: CoursesComponent, canActivate: [AuthGuardService] },
+    { path: 'login', component: LoginComponent },
+    { path: 'courses/new', component: NewCourseComponent, canActivate: [AuthGuardService] },
+    {
+        path: 'courses/:id',
+        component: NewCourseComponent,
+        resolve: { course: CourseResolver },
+        canActivate: [AuthGuardService],
+    },
+    { path: '**', component: NotfoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,14 +1,56 @@
 .label_container {
     margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
 }
 
-.text_input {
-    width: 100%;
-    padding: 10px;
+.authors_select {
+    padding: 5px;
     font-size: 1rem;
+    margin-bottom: 20px;
 }
 
-.text_input:focus {
+.authors_select:focus {
     outline: 2px solid var(--accent-color);
     border: none;
 }
+
+.authors {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mat-icon {
+    height: 18px;
+    width: 18px;
+}
+
+.material-icons {
+    font-size: 18px;
+    color: white;
+}
+
+.author {
+    position: relative;
+    background-color: var(--main-color);
+    color: white;
+    margin: 2px;
+    padding: 5px;
+}
+
+.author span {
+    display: inline-block;
+    padding: 5px;
+    margin-right: 20px;
+}
+.close {
+    position: absolute;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+}
+
+.invalid.ng-touched {
+    border: 2px solid var(--warn-color);
+ }
+ 

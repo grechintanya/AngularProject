@@ -11,37 +11,31 @@ import { CourseItemComponent } from './courseItem/course-item.component';
 import { CoursesHeaderComponent } from './coursesHeader/courses-header.component';
 import { ConfirmationModalComponent } from './modal/modal.component';
 import { BreadcrumbsModule, LoadingModule } from '../shared';
-import { setBorderDirective, FilterPipe, OrderByPipe } from '../utils/public_api';
+import { setBorderDirective } from '../utils/public_api';
 import { PipesModule } from '../shared/pipes.module';
 import { AppRoutingModule } from '../app-routing.module';
 
 
 @NgModule({
-  declarations: [
-    CoursesComponent,
-    CoursesHeaderComponent,
-    CourseItemComponent,
-    setBorderDirective,
-    OrderByPipe,
-    ConfirmationModalComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDialogModule,
-    PipesModule,
-    AppRoutingModule,
-    BreadcrumbsModule,
-    LoadingModule
-  ],
-  exports: [
-    CoursesComponent
-  ],
-  providers: [
-    FilterPipe
-  ],
-
+    declarations: [
+        CoursesComponent,
+        CoursesHeaderComponent,
+        CourseItemComponent,
+        setBorderDirective,
+        ConfirmationModalComponent,
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        PipesModule,
+        AppRoutingModule,
+        BreadcrumbsModule,
+        LoadingModule,
+    ],
+    exports: [CoursesComponent],
+    providers: [],
 })
-export class CoursesModule { }
+export class CoursesModule {}

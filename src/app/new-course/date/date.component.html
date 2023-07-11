@@ -1,4 +1,10 @@
-<div class="label_container">
-    <label for="date">Date:</label>
-</div>
-<input type="date" id="date" [(ngModel)]="creationDate" (blur)="changeDate()">
+<div class="label_container"><label for="date">Date:</label><span>*required</span></div>
+<input
+    type="text"
+    #dateInput
+    placeholder="dd/mm/yyyy"
+    id="date"
+    [(ngModel)]="creationDate"
+    (blur)="onTouched()"
+    [ngClass]="{ invalid: errors }"
+/>

@@ -1,39 +1,53 @@
-import { coursesReducer } from "./reducer";
+import { coursesReducer } from './reducer';
 import * as coursesActions from './actions';
-import { CoursesState } from "./coursesState.interface";
-import { mockedCourses } from "src/app/utils/global.constants";
-import { Course } from "src/app/utils/global.models";
-import { isNgTemplate } from "@angular/compiler";
+import { CoursesState } from './coursesState.interface';
+import { mockedCourses } from 'src/app/utils/global.constants';
+import { Course } from 'src/app/utils/global.models';
+import { isNgTemplate } from '@angular/compiler';
 
 describe('Courses Reducer', () => {
-
     let initialState: CoursesState;
     let courseList: Course[];
 
     beforeEach(() => {
-
         courseList = [
             {
-                id: 1, name: 'VideoCourse 1', date: '2022-12-03',
-                length: 220, description: 'Course 1 description', isTopRated: true, authors: []
+                id: 1,
+                name: 'VideoCourse 1',
+                date: '2022-12-03',
+                length: 220,
+                description: 'Course 1 description',
+                isTopRated: true,
+                authors: [],
             },
             {
-                id: 2, name: 'videoCourse 2', date: '2023-06-10', length: 150,
-                description: 'Course 2 description', isTopRated: false, authors: []
+                id: 2,
+                name: 'videoCourse 2',
+                date: '2023-06-10',
+                length: 150,
+                description: 'Course 2 description',
+                isTopRated: false,
+                authors: [],
             },
             {
-                id: 3, name: 'VideoCourse 3', date: '2023-05-30',
-                length: 120, description: 'Course 3 description', isTopRated: false, authors: []
-            }
+                id: 3,
+                name: 'VideoCourse 3',
+                date: '2023-05-30',
+                length: 120,
+                description: 'Course 3 description',
+                isTopRated: false,
+                authors: [],
+            },
         ];
 
         initialState = {
             courses: courseList,
             isLoading: false,
             error: null,
-            searchQuery: ''
-        }
-    })
+            searchQuery: '',
+            allAuthors: [],
+        };
+    });
 
     it('should change "IsLoading" to true after getCourses action', () => {
         const action = coursesActions.getCourses();
@@ -54,7 +68,7 @@ describe('Courses Reducer', () => {
     });
 
     it('should change "IsLoading" to true after updateCourse action', () => {
-        const action = coursesActions.updateCourse({ id: 2, course: courseList[1] });
+        const action = coursesActions.updateCourse({ course: courseList[1] });
         const state = coursesReducer(initialState, action);
         expect(state.isLoading).toBe(true);
     });
@@ -83,7 +97,6 @@ describe('Courses Reducer', () => {
         expect(state.error).toBe('test error');
     });
 
-
     it('should replace courses with new courses array after getCoursesSuccess action', () => {
         const action = coursesActions.getCoursesSuccess({ courses: mockedCourses });
         const state = coursesReducer(initialState, action);
@@ -107,29 +120,38 @@ describe('Courses Reducer', () => {
         const action = coursesActions.deleteCourseSuccess({ id: 1 });
         const state = coursesReducer(initialState, action);
         expect(state.courses.length).toBe(2);
-        expect(state.courses.find(item => item.id === 1)).toBeUndefined();
+        expect(state.courses.find((item) => item.id === 1)).toBeUndefined();
     });
 
     it('the course should be added to courses array after createCourseSuccess action', () => {
         const newCourse = {
-            id: 4, name: 'VideoCourse 4', date: '2023-07-23',
-            length: 100, description: 'Course 4 description', isTopRated: false, authors: []
+            id: 4,
+            name: 'VideoCourse 4',
+            date: '2023-07-23',
+            length: 100,
+            description: 'Course 4 description',
+            isTopRated: false,
+            authors: [],
         };
         const action = coursesActions.createCourseSuccess({ newCourse: newCourse });
         const state = coursesReducer(initialState, action);
         expect(state.courses.length).toBe(4);
-        expect(state.courses.find(item => item.id === 4)).toEqual(newCourse);
+        expect(state.courses.find((item) => item.id === 4)).toEqual(newCourse);
     });
-    
+
     it('the updated course should be replaced with new course after updateCourseSuccess action', () => {
         const newCourse = {
-            id: 1, name: 'Updated course', date: '2023-07-23',
-            length: 100, description: 'Course 4 description', isTopRated: false, authors: []
+            id: 1,
+            name: 'Updated course',
+            date: '2023-07-23',
+            length: 100,
+            description: 'Course 4 description',
+            isTopRated: false,
+            authors: [],
         };
         const action = coursesActions.updateCourseSuccess({ course: newCourse });
         const state = coursesReducer(initialState, action);
         expect(state.courses.length).toBe(3);
-        expect(state.courses.find(item => item.id === 1)?.name).toBe('Updated course');
+        expect(state.courses.find((item) => item.id === 1)?.name).toBe('Updated course');
     });
-
-})
+});

@@ -1,6 +1,6 @@
 <div class="container">
     <app-loading *ngIf="showCoursesLoader$ | async"></app-loading>
-    <div class="error" *ngIf="coursesError$ | async as error">{{ error }}
+    <div class="error_message" *ngIf="coursesError$ | async as error">{{ error }}
         <button (click)="onCloseClicked()">
             <mat-icon>close</mat-icon>
         </button>

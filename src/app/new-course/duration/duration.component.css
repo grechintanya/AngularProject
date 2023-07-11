@@ -15,3 +15,7 @@ input:focus {
 span {
    margin-left: 10px;
 }
+
+.invalid.ng-touched {
+   border: 2px solid var(--warn-color);
+}
