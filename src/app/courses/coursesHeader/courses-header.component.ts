@@ -9,6 +9,7 @@ import { CoursesService } from 'src/app/services';
 })
 export class CoursesHeaderComponent {
   
+
   constructor(private coursesService: CoursesService) {}
 
   onKeyUp(event: any) {
