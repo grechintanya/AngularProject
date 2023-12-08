@@ -1,12 +1,19 @@
 .label_container {
      margin: 10px 0;
+     display: flex;
+     justify-content: space-between;
 }
 
 input {
     padding: 5px;
+    font-size: 1rem;
 }
 
 input:focus {
     outline: 2px solid var(--accent-color);
     border: none;
+}
+
+input.invalid.ng-touched {
+    border: 2px solid var(--warn-color);
 }

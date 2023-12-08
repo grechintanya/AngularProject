@@ -1,6 +1,8 @@
 <div class="courses-header">
-<div class="search">
-    <input type="text" placeholder="Text to search" (keyup)="onKeyUp($event)">
-</div>
-<button mat-raised-button color="primary"><mat-icon>add</mat-icon><a routerLink="/courses/new">Add Course</a></button>
+    <form class="search" #searchForm="ngForm">
+        <input type="text" name="search" placeholder="Text to search" (keyup)="onKeyUp($event)" />
+    </form>
+    <button mat-raised-button color="primary">
+        <a routerLink="/courses/new"><mat-icon>add</mat-icon>Add Course</a>
+    </button>
 </div>

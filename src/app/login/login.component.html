@@ -1,14 +1,27 @@
 <app-loading *ngIf="showAuthLoader$ | async"></app-loading>
-<div class="error" *ngIf="authError$ | async as error">{{ error }}
+<div class="error_message" *ngIf="authError$ | async as error">
+    {{ error }}
     <button (click)="onCloseClicked()"><mat-icon>close</mat-icon></button>
 </div>
-<form class="login_form">
+<form class="login_form" [formGroup]="loginForm" (submit)="onSubmit()">
     <h1>Login</h1>
-    <div><label for="email_input">Email:</label><span>*required</span></div>
-    <input type="text" id="email_input" name="email" placeholder="Enter email" [(ngModel)]="login">
-    <div><label for="password_input">Email:</label><span>*required</span></div>
-    <input type="text" id="password_input" name="password" placeholder="Enter password" [(ngModel)]="password">
-    <div><a href="#">Forgot password?</a>
-        <button mat-raised-button color="primary" (click)="onLoginButtonClicked()">Login</button>
+    <div><label for="login_input">Login:</label><span>*required</span></div>
+    <input type="text" id="login_input" formControlName="login" placeholder="Enter login" />
+    <div *ngIf="login?.invalid && login?.touched" class="error">Login is required</div>
+
+    <div><label for="password_input">Password:</label><span>*required</span></div>
+    <input
+        type="text"
+        id="password_input"
+        name="password"
+        placeholder="Enter password"
+        formControlName="password"
+    />
+    <div *ngIf="password?.invalid && password?.touched" class="error">Password is required</div>
+    <div>
+        <a href="#">Forgot password?</a>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
+            Login
+        </button>
     </div>
 </form>
